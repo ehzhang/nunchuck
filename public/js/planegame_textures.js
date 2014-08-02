@@ -1,6 +1,6 @@
 Cut.addTexture({
   name : "base",
-  imagePath : "../public/assets/base.png",
+  imagePath : "assets/base.png",
   imageRatio : 4,
   ratio : 16,
   filter : function(cut) {
