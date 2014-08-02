@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title> Color Fling! </title>
+  <script src="js/sense.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    var sense = sense.init();
+
+    var socket = io();
+
+    var colors = [
+      "#33B5E5",
+      "#AA66CC",
+      "#99CC00",
+      "#FFBB33",
+      "#FF4444"
+    ];
+
+    var selectedColor = colors[0];
+
+    sense.flick(function(data){
+      broadcast();
+    });
+
+    $(document).ready(function(){
+
+      $('.option').each(function(i, element){
+        $(element)
+            .css({"background": colors[i]})
+            .click(function(){
+              $('body').css({"background": colors[i]});
+              selectedColor = colors[i]
+            })
+      })
+
+    });
+
+    function broadcast(){
+      socket.emit('color', selectedColor)
+    }
+
+    socket.on('color-broadcast', function(color){
+      selectedColor = color;
+      $('body').css({"background": selectedColor});
+    })
+
+  </script>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    .option {
+      display: inline-block;
+      height: 80px;
+      width: 20%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="option"></div><div class="option"></div><div class="option"></div><div class="option"></div><div class="option"></div>
+</body>
+</html>

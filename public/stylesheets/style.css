@@ -1,0 +1,62 @@
+body {
+  padding: 50px;
+  font: 1em "Montserrat", Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+
+.title {
+  font: 8em "Montserrat", Helvetica, Arial, sans-serif;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font: 2em "Montserrat", Helvetica, Arial, sans-serif;
+  color: #737373;
+  margin-bottom: 30px;
+}
+
+a {
+  font-size: 1.2em;
+  color: #33b5e5;
+}
+
+.downloads {
+  margin-top: 20px;
+  display: inline-block
+}
+
+a.button {
+  display: block;
+  font-size: 1.3em;
+  text-decoration: none;
+  margin: 16px 0;
+  padding: 12px;
+  border: 2px solid #33b5e5 ;
+  width: 400px;
+
+  -webkit-transition: color 500ms, background 500ms;
+  -moz-transition: color 500ms, background 500ms;
+  -o-transition: color 500ms, background 500ms;
+  -ms-transition: color 500ms, background 500ms;
+  transition: color 500ms, background 500ms;
+}
+
+a.button:hover {
+  color: white;
+  background: #33b5e5;
+}
+
+@media only screen and (max-width: 480px) {
+  .title {
+    font-size: 3.2em;
+  }
+
+  .subtitle {
+    font-size: 1.3em;
+  }
+
+  a.button {
+    font-size: .8em;
+    width: 100%;
+  }
+}

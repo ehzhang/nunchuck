@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title> sense.js | simple gestures for the mobile web </title>
+  <script src="js/sense.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+  <link href='stylesheets/style.css' rel="stylesheet" type="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-53015325-1', 'auto');
+    ga('send', 'pageview');
+
+
+    $(document).ready(function(){
+      var colors = [
+        "#33B5E5",
+        "#AA66CC",
+        "#99CC00",
+        "#FFBB33",
+        "#FF4444"
+      ];
+
+      var randomColor = colors[Math.floor(Math.random()*colors.length)];
+
+      function injectStyles(rule) {
+        var div = $("<div />", {
+          html: '&shy;<style>' + rule + '</style>'
+        }).appendTo("body");
+      }
+      injectStyles('a.button:hover{ color:white !important; background:' + randomColor +';}');
+
+      $('.js').css({"color": randomColor});
+      $('a').css({"color": randomColor});
+      $('a.button')
+          .css({
+            "borderColor": randomColor
+          });
+      })
+
+  </script>
+</head>
+<body>
+
+  <div class="title">
+    sense.<span class="js">js</span>
+  </div>
+
+  <div class="subtitle">
+    simple gestures for mobile web browsers
+  </div>
+
+  <div class="examples">
+    <a href="/orientation">ORIENTATION</a>
+    //
+    <a href="/flick">FLICK</a>
+    //
+    <a href="/flip">FLIP</a>
+    //
+    <a href="/color-fling">COLOR FLING</a>
+    //
+    <a href="/scroll">SCROLL</a>
+    //
+    <a href="/shake">SHAKE</a>
+  </div>
+
+  <div class="downloads">
+    <a href="js/sense.js" class="download button" download>
+      DOWNLOAD
+    </a>
+
+    <a href="http://github.com/ehzhang/sense-js" class="button">
+      DOCUMENTATION ON GITHUB
+    </a>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "nunchuck.js",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./app.js"
+  },
+  "dependencies": {
+    "body-parser": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "debug": "~0.7.4",
+    "express": "~4.2.0",
+    "jade": "~1.3.0",
+    "morgan": "~1.0.0",
+    "socket.io": "^1.0.6",
+    "static-favicon": "~1.0.0"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "devDependencies": {
+    "nodemon": "^1.2.1"
+  }
+}

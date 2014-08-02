@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  padding: 0
+}
+.card {
+  position: absolute;
+  width: 100%;
+  heighT: 100%;
+}
+
+.top.card {
+  z-index: 2;
+}
+
+.bottom.card {
+  z-index: 1;
+}
