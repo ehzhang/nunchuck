@@ -18,6 +18,10 @@ router.get('/', function(req, res) {
   }
 });
 
+router.get('/mobile', function(req, res){
+  res.sendfile('views/sender.html');
+});
+
 router.get('/fling', function(req, res){
   res.sendfile('views/fling.html');
 });
