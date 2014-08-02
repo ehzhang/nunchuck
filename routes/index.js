@@ -10,4 +10,8 @@ router.get('/fling', function(req, res){
   res.sendfile('views/fling.html');
 })
 
+router.get('/planegame', function(req, res){
+  res.sendfile('views/planegame.html');
+})
+
 module.exports = router;
