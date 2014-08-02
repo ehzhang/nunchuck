@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
+var routes = require('./server/routes/index');
 
 var app = express();
 
@@ -29,17 +29,8 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-// --------------------------------
-
-// Socket code
-io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.on('color', function(color){
-    console.log(color);
-    io.emit('color-broadcast', color)
-  });
-});
-
+// Sockets
+require('./server/sockets')(io);
 
 // -------------------------------
 
