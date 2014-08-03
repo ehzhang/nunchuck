@@ -18,22 +18,31 @@
 
       var players = {};
 
-      var numPlayers = 1234;
+      var playerNumber = 1234;
 
       n.onJoin(function(data){
 
-        if (!players[data.username]){
-          players[data.username] = numPlayers;
-          numPlayers+=1;
-          createPlane(players[data.username]);
-          $('.users').append("<br><strong>" + data.username + "</strong>")
+        if (!players[playerNumber]){
+          players[playerNumber] = {
+            'username':data.username,
+            'killcount': 0,
+            'id':playerNumber}
+          createPlane(players[playerNumber]['id']);
+          var $el = $("<div class='user'><div>")
+          players[playerNumber].el = $el;
+          players[playerNumber].el.text(players[playerNumber]['username'] + ':' +
+            players[playerNumber]['killcount'])
+          $('.users').append(players[playerNumber].el)
+          playerNumber+=1;
         }
 
         n.receive(function(data){
-          if (players[data.username]){
-            data.id = players[data.username];
-            movePlane(data)
+          for (var id in players) {
+            if (data.username == players[id]['username']) {
+              data.id = players[id]['id'];
+            }
           }
+            movePlane(data)
         })
       });
 
@@ -44,6 +53,11 @@
     </script>
 
     <style>
+
+      .user {
+        display: block;
+      }
+
 
       .code {
         position: fixed;

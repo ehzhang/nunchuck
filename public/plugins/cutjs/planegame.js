@@ -222,7 +222,18 @@ Drone.prototype.animate = function(t) {
         var dead2 = drones[keys[i]];
         delete drones[this.playerId];
         delete drones[keys[i]];
+        if (players[this.playerId]) {
+          players[this.playerId]['killcount'] +=1;
+          players[this.playerId].el.text(players[this.playerId]['username'] + ":" +
+          players[this.playerId]['killcount']);
+        }
+        if (players[keys[i]]) {
+          players[keys[i]]['killcount'] +=1;
+          players[keys[i]].el.text(players[keys[i]]['username'] + ":" +
+          players[keys[i]]['killcount']);
+        }
 
+        console.log(players);
         if (dead1){
           dead1.destruct();
         }
