@@ -150,7 +150,7 @@ n.onJoin(function(data){
 });
 ```
 
-Demo
+Run Locally
 -------------
 To start the demo site locally:
 
