@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
 });
 
 // Sockets
-require('./server/sockets')(io);
+require('./server/nunchuck-server')(io);
 
 // -------------------------------
 

@@ -19,11 +19,12 @@ router.get('/', function(req, res) {
 });
 
 router.get('/mobile', function(req, res){
-  res.sendfile('views/sender.html');
+  res.sendfile('views/test_sender.html');
 });
 
-router.get('/fling', function(req, res){
-  res.sendfile('views/fling.html');
+router.get('/test', function(req, res){
+  res.sendfile('views/test_receiver.html');
 });
+
 
 module.exports = router;

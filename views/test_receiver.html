@@ -12,17 +12,17 @@
   <script>
     var socket = io();
 
-    var n = nunchuck.init('player', socket);
+    var n = nunchuck.init('host', socket);
 
     n.onJoin(function(data){
       console.log(data)
-    })
+    });
 
   </script>
 </head>
 <body>
 
-<h1> SENDER </h1>
+<h1> RECEIVER </h1>
 
 </body>
 </html>
