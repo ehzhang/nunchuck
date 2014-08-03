@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Aero - CutJS</title>
+    <meta name="root" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height" />
+    <link href="stylesheets/planegame.css" rel="stylesheet" />
+    <script src="js/nunchuck.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>player_data = {}; down_keys = {};</script>
+
+
+    <script>
+      var socket = io();
+
+      var n = nunchuck.init('host', socket);
+
+      n.onJoin(function(data){
+        n.receive(function(data){
+          data.id = 1234;
+          movePlane(data)
+        })
+      })
+
+    </script>
+  </head>
+
+  <body>
+
+    <div class="hint">Use mouse, arrow keys and w/a/s/d keys to play.</div>
+
+    <script src="js/plugins/cutjs/cut-core.js"></script>
+    <script src="js/plugins/cutjs/cut-mouse.js"></script>
+    <script src="js/plugins/cutjs/cut-loader.web.js"></script>
+    <script src="js/plugins/cutjs/planegame.js"></script>
+    <script src="js/plugins/cutjs/planegame_textures.js"></script>
+    <script src="js/plugins/cutjs/receiver.js"></script>
+
+  </body>
+
+</html>

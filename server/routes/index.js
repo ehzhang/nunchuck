@@ -26,5 +26,8 @@ router.get('/test', function(req, res){
   res.sendfile('views/test_receiver.html');
 });
 
+router.get('/planegame', function(req, res){
+  res.sendfile('views/planegame.html');
+});
 
 module.exports = router;

@@ -19,6 +19,12 @@
     "node": "0.10.x"
   },
   "devDependencies": {
-    "nodemon": "^1.2.1"
+    "nodemon": "^1.2.1",
+    "minimist": "~0.1.0",
+    "gulp": "~3.6.2",
+    "gulp-uglify": "~0.3.0",
+    "gulp-concat": "~2.2.0",
+    "gulp-wrap": "~0.3.0",
+    "gulp-bump": "~0.1.8"
   }
 }
