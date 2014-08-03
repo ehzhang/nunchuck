@@ -16,17 +16,17 @@ Demo
 
 #### Plane Game
 
-You can play our multiplayer fighter plane demo by navigating to http://nunchuckjs.com/planegame in any desktop browser.
+You can play our multiplayer fighter plane demo by navigating to [http://nunchuckjs](http://nunchuckjs).com/planegame in any desktop browser.
 
-Use your phone as a controller by navigating to http://nunchuckjs.com on a mobile browser, then selecting "CONNECT." Then, choose a username and enter the room ID on the screen of the desktop browser. You will see a plane spawn in the screen that responds to your phone's movements.
+Use your phone as a controller by navigating to [http://nunchuckjs.com](http://nunchuckjs.com) on a mobile browser, then selecting "CONNECT." Then, choose a username and enter the room ID on the screen of the desktop browser. You will see a plane spawn in the screen that responds to your phone's movements.
 
 Tilt left or right to steer. Tilt forward to accelerate or backwards to decelerate. Press A to fire bullets. Don't run into other planes or bullets, or your plane will crash! Press start to respawn.
 
 #### Mario Kart
 
-You can play our multiplayer MarioKart demo by navigating to http://nunchuckjs.com/snes in any desktop browser.
+You can play our multiplayer MarioKart demo by navigating to [http://nunchuckjs.com/snes](http://nunchuckjs.com/snes) in any desktop browser.
 
-Use your phone as a controller by navigating to http://nunchuckjs.com on a mobile browser, then selecting "GAMEPAD." You will then be able to use the arrowkeys to select a character. Tilt your phone down or press "B" to select.
+Use your phone as a controller by navigating to [http://nunchuckjs.com](http://nunchuckjs.com) on a mobile browser, then selecting "GAMEPAD." You will then be able to use the arrowkeys to select a character. Tilt your phone down or press "B" to select.
 
 Tilt left or right to steer, and tilt forwards and backwards to accelerate and decelerate, respectively. Press A to use items.
 
@@ -157,4 +157,26 @@ To start the demo site locally:
 $ npm install
 $ npm start
 ```
+
+Available under the MIT License
+
+Copyright (c) 2014 [ehzhang](https://github.com/ehzhang), [ankushg](https://github.com/ankushg), [anubhav94](https://github.com/anubhav94), [kathrynsiegel](https://github.com/kathrynsiegel)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 
