@@ -48,6 +48,10 @@ movePlane = function(obj) {
     }
   }
 
+  if (player_data[user_id]["LT"] || player_data[user_id]["RT"] || player_data[user_id]["A"] || player_data[user_id]["B"]) {
+    drones[user_id].shoot();
+  }
+
   if (orientation["beta"] > 20.0) {
     player_data[user_id][active_commands["rightArrow"]] = true;
   } else if (orientation["beta"] < -20.0) {
@@ -72,5 +76,4 @@ movePlane = function(obj) {
 // }
 
 
-// nunchuck.onJoin(funci);
 
