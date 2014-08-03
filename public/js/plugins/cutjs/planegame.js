@@ -66,8 +66,11 @@ World.prototype.calculateElapsed = function() {
 };
 
 function Splat(xloc, yloc) {
+  
   this.x = xloc;
   this.y = yloc;
+  console.log(this.x);
+  console.log(this.y);
 };
 
 Splat.prototype.uiCreate = function(world) {
@@ -77,9 +80,25 @@ Splat.prototype.uiCreate = function(world) {
   console.log(this.ui);
 };
 
-Splat.prototype.animate = function(t) {
+Splat.prototype.uiUpdate = function() {
+  if (!this.ui)
+    return;
+  var x = this.x;
+  var y = this.y;
 
+  var pin = {
+    rotation : 0,
+    scaleY : 1
+  };
+
+  this.ui.xy(x, y).pin(pin);
+}
+
+Splat.prototype.animate = function(t) {
+  this.uiUpdate();
 };
+
+
 
 
 // function Bullet(xloc, yloc, xvel, yvel, parent_id) {
@@ -227,7 +246,7 @@ Drone.prototype.animate = function(t) {
       var other_y = player_data[keys[i]]["locationY"];
 
 
-      if (Math.abs(this.x-other_x) < 5 && Math.abs(this.y-other_y) < 5) {
+      if (Math.abs(this.x-other_x) < 50 && Math.abs(this.y-other_y) < 50) {
         console.log("dead: ", other_x, this.x);
         console.log("deady: ", other_y, this.y);
         var dead1 = drones[this.playerId];
@@ -316,6 +335,8 @@ Cut(function(root, canvas) {
     // console.log("asdfasdf", this.x, this.y);
     var x_ind = this.x;
     var y_ind = this.y;
+    console.log("earlierx: ",x_ind);
+    console.log("earliery: ",y_ind);
     world.removeObject(this);
     world.addObject(new Splat(x_ind, y_ind));
   }
