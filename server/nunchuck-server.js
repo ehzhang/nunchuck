@@ -27,6 +27,7 @@ module.exports = function(io) {
       if (type !== 'host' && rooms[msg.id]){
         socket.join(msg.id);
         console.log("User " + msg.username + " joined room " + msg.id);
+        type = 'player';
 
         io.to(msg.id).emit('nunchuck-join',
           {
@@ -43,5 +44,11 @@ module.exports = function(io) {
           });
       }
     });
+
+    socket.on('nunchuck-data', function(data){
+      if (type === 'player'){
+        io.to(data.roomId).emit('nunchuck-data', data)
+      }
+    })
   });
 };

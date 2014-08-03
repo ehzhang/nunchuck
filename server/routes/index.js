@@ -12,9 +12,9 @@ function isCallerMobile(req) {
 
 router.get('/', function(req, res) {
   if (isCallerMobile(req)){
-    res.sendfile('views/sender.html')
+    res.sendfile('views/test_sender.html')
   } else {
-    res.sendfile('views/index.html');
+    res.sendfile('views/test_receiver.html');
   }
 });
 

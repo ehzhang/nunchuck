@@ -15,14 +15,23 @@
     var n = nunchuck.init('player', socket);
 
     n.onJoin(function(data){
-      console.log(data)
-    })
+      console.log(data);
+      n.send();
+    });
+
+    function join(){
+      n.join($('#username').val(), $('#id').val());
+    }
 
   </script>
 </head>
 <body>
 
 <h1> SENDER </h1>
+
+<input type="text" id="username">
+<input type="text" id="id">
+<button onclick="join()">JOIN</button>
 
 </body>
 </html>
