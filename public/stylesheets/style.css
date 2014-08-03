@@ -2,7 +2,7 @@ html,
 body {
   font: 1em "Montserrat", Helvetica, Arial, sans-serif;
   text-align: center;
-  height: 100%;
+  max-height: 100%;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -13,7 +13,7 @@ section {
 }
 
 section#splash {
-  min-height: 100%;
+  max-height: 100%;
   background: #1f1f1f;
   padding-top: 80px;
   color: white;
