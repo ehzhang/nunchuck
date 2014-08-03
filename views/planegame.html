@@ -34,12 +34,32 @@
             movePlane(data)
           }
         })
-      })
+      });
+
+      $(document).ready(function(){
+        $('.code').text(n.roomId)
+      });
 
     </script>
+
+    <style>
+      .code {
+        position: fixed;
+        font-size: 15em;
+        opacity: .5;
+        right: .2em;
+        bottom: 0;
+      }
+    </style>
   </head>
 
   <body>
+
+    <div class="code">
+
+    </div>
+
+
 
     <script src="plugins/cutjs/cut-core.js"></script>
     <script src="plugins/cutjs/cut-mouse.js"></script>
