@@ -35,8 +35,17 @@
   Nunchuck.prototype.onJoin = function(callback){
     nunchuck = this;
     this.socket.on('nunchuck-join', function(data){
+      var err;
       nunchuck.roomId = data.id;
-      callback(data);
+      if (nunchuck.type === 'player'){
+        nunchuck.send();
+      }
+      if (!data.success){
+        err = {
+          msg: data.msg
+        }
+      }
+      callback(data, err);
     });
   };
 

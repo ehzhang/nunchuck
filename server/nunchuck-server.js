@@ -24,25 +24,37 @@ module.exports = function(io) {
     });
 
     socket.on('nunchuck-join', function(msg){
+
+      var response = {
+        username: msg.username,
+        id: msg.id,
+        success: false,
+        msg: "Unknown Error"
+      };
+
       if (type !== 'host' && rooms[msg.id]){
+
         socket.join(msg.id);
         console.log("User " + msg.username + " joined room " + msg.id);
         type = 'player';
 
-        io.to(msg.id).emit('nunchuck-join',
-          {
-            username: msg.username,
-            id: msg.id,
-            success: true
-          });
-      } else {
-        socket.emit('nunchuck-join',
-          {
-            username: msg.username,
-            id: msg.id,
-            success: false
-          });
+        response.success = true;
+        response.msg = "Successfully joined room.";
+
+        io.to(msg.id).emit('nunchuck-join', response);
+        return
       }
+
+      if (type === 'host'){
+        response.msg = "Hosts cannot join rooms."
+      }
+
+      if (!rooms[msg.id]){
+        response.msg = "That room doesn't exist!"
+      }
+
+      socket.emit('nunchuck-join', response);
+
     });
 
     socket.on('nunchuck-data', function(data){
