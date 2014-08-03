@@ -2,22 +2,15 @@
 
 A platform for mobile web-based control of browser applications
 
-
-
-
-
 Overview
 --------
 
-HTML5 offers a lot of awesome access to hardware data. Sense.js is a library that
-abstracts away the math and gives developers and designers easy access to some
-common non-touch gesture interactions with simple javascript callbacks.
+We provide a platform that easily allows developers to integrate mobile browser controls into desktop browser javascript-based games in very few lines of code.
 
 ### Disclaimer
-This was made as a part of GreylockU's Hackfest, and will likely see changes to make
-things better/add more gestures :)
+Made with <3 at YCHacks 2014!
 
-Pull requests and feature suggestions are welcome!
+Pull requests and feature suggestions are welcome.
 
 Demo
 ------
