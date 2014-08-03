@@ -220,7 +220,7 @@ Cut(function(root, canvas) {
     return drone_new;    
   };
 
-  var drone = createPlane("1234");
+//  var drone = createPlane("1234");
 
   // Keyboard
 
@@ -228,11 +228,11 @@ Cut(function(root, canvas) {
     world.run(true);
     root.touch();
     e = e || window.event;
-    player_data[drone.playerId][e.keyCode] = true;
+//    player_data[drone.playerId][e.keyCode] = true;
   };
   document.onkeyup = function(e) {
     e = e || window.event;
-    player_data[drone.playerId][e.keyCode] = false;
+//    player_data[drone.playerId][e.keyCode] = false;
   };
 
   // Mouse
