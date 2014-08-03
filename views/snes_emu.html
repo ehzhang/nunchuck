@@ -9,6 +9,170 @@
       /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
       canvas { border: 0px none; }
     </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/nunchuck.js"></script>
+    <script src="js/plugins/podium.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      var socket = io();
+      var n = nunchuck.init('host', socket);
+
+      var player1 = null;
+      var player2 = null;
+
+      Array.prototype.diff = function(a) {
+        return this.filter(function(i) {return a.indexOf(i) < 0;});
+      };
+
+      n.onJoin(function(data){
+        if (!player1) {
+          player1 = {
+            username: data.username,
+            prevKeys: []
+          };
+        } else if (!player2) {
+          player2 = {
+            username: data.username,
+            prevKeys: []
+          };
+        } else {
+            // SNES only supports max of two players!
+        }
+
+      });
+
+      function translateKeyPress(player, button){
+        var m = {
+          "0": "96",
+          "1": "97",
+          "2": "98",
+          "3": "99",
+          "4": "100",
+          "5": "101",
+          "6": "102",
+          "7": "103",
+          "8": "104",
+          "9": "105",
+          "backspace": "8",
+          "tab": "9",
+          "return": "13",
+          "shift": "16",
+          "ctrl": "17",
+          "alt": "18",
+          "pausebreak": "19",
+          "capslock": "20",
+          "escape": "27",
+          " ": "32",
+          "pageup": "33",
+          "pagedown": "34",
+          "end": "35",
+          "home": "36",
+          "left": "37",
+          "up": "38",
+          "right": "39",
+          "down": "40",
+          "+": "107",
+          "printscreen": "44",
+          "insert": "45",
+          "delete": "46",
+          ";": "186",
+          "=": "187",
+          "a": "65",
+          "b": "66",
+          "c": "67",
+          "d": "68",
+          "e": "69",
+          "f": "70",
+          "g": "71",
+          "h": "72",
+          "i": "73",
+          "j": "74",
+          "k": "75",
+          "l": "76",
+          "m": "77",
+          "n": "78",
+          "o": "79",
+          "p": "80",
+          "q": "81",
+          "r": "82",
+          "s": "83",
+          "t": "84",
+          "u": "85",
+          "v": "86",
+          "w": "87",
+          "x": "88",
+          "y": "89",
+          "z": "90",
+          "*": "106",
+          "-": "189",
+          ".": "190",
+          "/": "191",
+          "f1": "112",
+          "f2": "113",
+          "f3": "114",
+          "f4": "115",
+          "f5": "116",
+          "f6": "117",
+          "f7": "118",
+          "f8": "119",
+          "f9": "120",
+          "f10": "121",
+          "f11": "122",
+          "f12": "123",
+          "numlock": "144",
+          "scrolllock": "145",
+          ",": "188",
+          "`": "192",
+          "[": "219",
+          "\\": "220",
+          "]": "221",
+          "'": "222"
+        };
+
+        switch (button) {
+          case "A":       return player == player1 ? m.x : m.k;
+          case "B":       return player == player1 ? m.z : m.j;
+          case "X":       return player == player1 ? m.s : m.i;
+          case "Y":       return player == player1 ? m.a : m.u;
+          case "SELECT":  return player == player1 ? m.ctrl : m.n;
+          case "START":   return player == player1 ? m.enter : m.m;
+          case "UP":      return player == player1 ? m.up : m.y;
+          case "DOWN":    return player == player1 ? m.down : m.b;
+          case "LEFT":    return player == player1 ? m.left : m.g;
+          case "RIGHT":   return player == player1 ? m.right : m.h;
+          case "LT":      return player == player1 ? m.q : m.c;
+          case "RT":      return player == player1 ? m.w : m.v;
+        }
+      }
+
+      function processInput(player, data) {
+        // things not previously pressed = new key down actions
+        var newKeyDowns = data.buttons.diff(player.prevKeys);
+        $(newKeyDowns).each(function(index, element) {
+          Podium.fire("keydown", parseInt(translateKeyPress(player, element)));
+        });
+
+        // things previously pressed that are no longer pressed = new key up actions
+        var newKeyUps = player.prevKeys.diff(data.buttons);
+        $(newKeyUps).each(function(index, element){
+          Podium.fire("keyup", parseInt(translateKeyPress(player, element)));
+        });
+
+        player.prevKeys = data.buttons;
+      }
+
+      n.receive(function(data){
+        if (data.username === player1.username) {
+          processInput(player1, data);
+        } else if (data.username === player2.username) {
+          processInput(player2, data);
+        } else {
+          // if you're not player 1 or player 2, ignore your input!
+        }
+
+      });
+      // TODO: disconnect resets player1/player2 to null? pause the game?
+    </script>
   </head>
   <body>
     <h1>Snes9x + Nunchuck = &lt;3</h1>
@@ -59,7 +223,6 @@
           else
             config += 'video_vsync = false\n';
 
-          console.log(config);
           Module.FS_createDataFile('/etc', 'retroarch.cfg', config, true, true);
 
           document.getElementById('canvas_div').style.display = 'block';
