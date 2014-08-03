@@ -1,38 +1,70 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Base! </title>
-  <script src="js/nunchuck.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Base! </title>
+    <script src="js/nunchuck.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <!-- Stylin' -->
 
-  <script>
-    var socket = io();
+    <!-- Stylin' -->
+    <link href="stylesheets/animate.css" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
 
-    var n = nunchuck.init('player', socket);
+    <link href="stylesheets/controller.css" rel="stylesheet" type="text/css">
 
-    n.onJoin(function(data){
-      console.log(data);
-    });
+  </head>
+  <body>
 
-    function join(){
-      n.join($('#username').val(), $('#id').val());
-    }
+    <button class="big connect" onclick="bounceIn('join')">
+      CONNECT
+    </button>
+    <button class="big gamepad" onclick="bounceIn('controller')">
+      GAMEPAD
+    </button>
 
-  </script>
-</head>
-<body>
+    <section id="join">
+      <div class="content">
 
-<h1> SENDER </h1>
+        <button class="close" onclick="bounceOut('join')"></button>
 
-<input type="text" id="username">
-<input type="text" id="id">
-<button onclick="join()">JOIN</button>
+        <input type="text" id="username" placeholder="Username">
+        <br>
+        <input type="tel" id="roomId" placeholder="Room Id">
+        <br>
+        <button class="outline" onclick="join()">JOIN</button>
+        <br>
+        <button class="outline" onclick="bounceOut('join')">CANCEL</button>
 
-</body>
+      </div>
+    </section>
+
+    <section id="controller" style="display:block">
+      <div class="d-pad">
+        <button class="nunchuck-button" id="UP">UP</button>
+        <button class="nunchuck-button" id="DOWN">DOWN</button>
+        <button class="nunchuck-button" id="LEFT">LEFT</button>
+        <button class="nunchuck-button" id="RIGHT">RIGHT</button>
+      </div>
+
+      <div class="action">
+        <button class="nunchuck-button" id="A">A</button>
+        <button class="nunchuck-button" id="B">B</button>
+      </div>
+
+      <div class="commands">
+        <button class="nunchuck-button" id="START">START</button>
+        <button class="nunchuck-button" id="SELECT">SELECT</button>
+      </div>
+
+      <button class="close" onclick="bounceOut('controller')"></button>
+
+    </section>
+
+  </body>
 </html>
