@@ -35,14 +35,14 @@ movePlane = function(obj) {
   var active_commands = {"leftArrow":37, "rightArrow":39, "upArrow":38, "downArrow":40};
 
 
-  console.log(pressed_buttons);
-  console.log("in move plane: " + down_keys);
+//  console.log(pressed_buttons);
+//  console.log("in move plane: " + down_keys);
 
   for (var i=0; i<possible_commands.length; i++) {
     command = possible_commands[i];
     if (pressed_buttons.indexOf(command) > -1) {
       player_data[user_id][active_commands[command]] = true;
-      console.log(down_keys);
+//      console.log(down_keys);
     } else if (active_commands[command]) {
       player_data[user_id][active_commands[command]] = false;
     }

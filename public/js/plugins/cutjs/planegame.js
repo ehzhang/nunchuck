@@ -220,7 +220,7 @@ Cut(function(root, canvas) {
     return drone_new;    
   };
 
-  var drone = createPlane("1234");
+//  var drone = createPlane("1234");
 
   // Keyboard
 
@@ -228,11 +228,11 @@ Cut(function(root, canvas) {
     world.run(true);
     root.touch();
     e = e || window.event;
-    player_data[drone.playerId][e.keyCode] = true;
+//    player_data[drone.playerId][e.keyCode] = true;
   };
   document.onkeyup = function(e) {
     e = e || window.event;
-    player_data[drone.playerId][e.keyCode] = false;
+//    player_data[drone.playerId][e.keyCode] = false;
   };
 
   // Mouse
@@ -319,7 +319,7 @@ Drone.prototype.uiCreate = function(world) {
   this.world = world;
   var drone_number = Math.random()*4;
   if (Object.keys(player_data).length%4==0) {
-    this.ui = (this.ui || Cut.image("base:drone").pin("handle", 0.5))
+    this.ui = (this.ui || Cut.image("base:drone1").pin("handle", 0.5))
       .appendTo(world.ui);
   } else if (Object.keys(player_data).length%4==1) {
     this.ui = (this.ui || Cut.image("base:drone2").pin("handle", 0.5))

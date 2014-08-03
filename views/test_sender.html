@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Base! </title>
+  <script src="js/sense.js"></script>
+  <script src="js/nunchuck.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    var socket = io();
+
+    var n = nunchuck.init('player', socket);
+
+    n.onJoin(function(data){
+      console.log(data);
+    });
+
+    function join(){
+      n.join($('#username').val(), $('#id').val());
+    }
+
+  </script>
+</head>
+<body>
+
+<h1> SENDER </h1>
+
+<input type="text" id="username">
+<input type="text" id="id">
+<button onclick="join()">JOIN</button>
+
+</body>
+</html>
