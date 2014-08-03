@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Snes9x + Nunchuck = <3</title>
+    <title>Snes9x + Nunchuck = &lt;3</title>
     <style>
       .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
       textarea.emscripten { font-family: monospace; width: 80%; }
@@ -15,12 +15,9 @@
     </style>
   </head>
   <body>
-    <h1>Snes9x + Nunchuck = <3</h1>
+    <h1>Snes9x + Nunchuck = &lt;3</h1>
     <hr/>
     <div class="emscripten" id="status">Downloading...</div>
-    <div class="emscripten">
-      <progress value="0" max="100" id="progress" hidden=1></progress>  
-    </div>
     <div class="emscripten_border" id="canvas_div" style="display: none">
       <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
     </div>
@@ -37,7 +34,7 @@
       <input type="button" value="Fullscreen" onclick="Module.requestFullScreen(document.getElementById('pointerLock').checked, 
                                                                                 document.getElementById('resize').checked)"><br>
       <input type="checkbox" id="vsync"><label for="vsync" id="vsync-label">Enable V-sync (can only be done before loading game)</label><br>
-      <input type="textbox" id="latency" size="3" maxlength="3" value="96"> <label for="latency" id="latency-label">Audio latency (ms) (increase if you hear pops at fullspeed, can only be done before loading game)</label>
+      <input type="text" id="latency" size="3" maxlength="3" value="96"> <label for="latency" id="latency-label">Audio latency (ms) (increase if you hear pops at fullspeed, can only be done before loading game)</label>
     </div>
     <script type='text/javascript'>
       var count = 0;
@@ -92,17 +89,6 @@
           if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
           var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
           var statusElement = document.getElementById('status');
-          var progressElement = document.getElementById('progress');
-          if (m) {
-            text = m[1];
-            progressElement.value = parseInt(m[2])*100;
-            progressElement.max = parseInt(m[4])*100;
-            progressElement.hidden = false;
-          } else {
-            progressElement.value = null;
-            progressElement.max = null;
-            progressElement.hidden = true;
-          }
           statusElement.innerHTML = text;
         },
         totalDependencies: 0,
@@ -113,4 +99,6 @@
       };
       Module.setStatus('Downloading...');
     </script>
-	<script type="text/javascript" src="js/plugins/snes9x/snes9x-next.js"></script>
+	  <script type="text/javascript" src="js/plugins/snes9x/snes9x-next.js"> </script>
+  </body>
+</html>
