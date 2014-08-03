@@ -26,6 +26,7 @@
     this.type = options.type;
     this.socket = options.socket;
     this.prevData = null;
+    this.buttons = [];
 
     if (this.type == 'host'){
       this.socket.emit('nunchuck-create', this.id);
@@ -93,7 +94,7 @@
             {
               username: _instance.username,
               roomId: _instance.roomId,
-              buttons: [],
+              buttons: _instance.buttons,
               orientation: data,
               timestamp: Date.now()
             });
@@ -106,16 +107,37 @@
     var buttons = document.getElementsByClassName('nunchuck-button');
 
     for(var i = 0; i < buttons.length; i++){
-      buttons[i].addEventListener('click', function(e){
+      buttons[i].addEventListener('touchstart', function(e){
+        if (_instance.buttons.indexOf(this.id) < 0){
+          _instance.buttons.push(this.id);
+        }
         _instance.socket.emit('nunchuck-data',
           {
             username: _instance.username,
             roomId: _instance.roomId,
-            buttons: [this.id],
+            buttons: _instance.buttons,
             orientation: _instance.prevData,
             timestamp: Date.now()
           });
-      })
+      });
+
+      buttons[i].addEventListener('touchmove', function(e){
+        e.preventDefault()
+      });
+
+      buttons[i].addEventListener('touchend', function(e){
+        if (_instance.buttons.indexOf(this.id) > -1){
+          _instance.buttons.splice(_instance.buttons.indexOf(this.id), 1)
+        }
+        _instance.socket.emit('nunchuck-data',
+          {
+            username: _instance.username,
+            roomId: _instance.roomId,
+            buttons: _instance.buttons,
+            orientation: _instance.prevData,
+            timestamp: Date.now()
+          });
+      });
     }
 
 
