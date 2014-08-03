@@ -15,7 +15,8 @@ Cut.addTexture({
     { name : "drone5", x : 4, y : 0, width : 1, height : 1 },
     { name : "bullet", x : 5, y : 0, width : 1, height : 1 }
   ]
-}); 
+});
+
 
 Cut.addTexture({
   name : "splat",
