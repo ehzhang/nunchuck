@@ -18,6 +18,15 @@ World.prototype.addObject = function(obj) {
   return obj;
 };
 
+World.prototype.removeObject = function(obj) {
+  for (var i=0; i<this.objects.length; i++) {
+    if (this.objects[i].playerId == obj.playerId) {
+      this.objects.splice(i,1);
+      obj.uiRemove(this);
+    }
+  }
+};
+
 World.prototype.resize = function(width, height) {
   this.width = width;
   this.height = height;
@@ -54,6 +63,18 @@ World.prototype.calculateElapsed = function() {
   this.elapsed = (now - this.time);
   this.time = now;
   return this.elapsed;
+};
+
+function Splat(xloc, yloc) {
+  this.x = xloc;
+  this.y = yloc;
+}
+
+Splat.prototype.uiCreate = function(world) {
+  this.world = world;
+  this.ui = (this.ui || Cut.image("base:drone1").pin("handle", 0.5))
+    .appendTo(world.ui);
+  this.uiUpdate();
 };
 
 function Drone(vMin, vMax, aMax) {
@@ -147,8 +168,21 @@ Drone.prototype.animate = function(t) {
 
   this.x = M.rotate(this.x + this.vx * t, this.world.xMin, this.world.xMax);
   this.y = M.rotate(this.y + this.vy * t, this.world.yMin, this.world.yMax);
-
+  player_data[this.playerId]["locationX"] = this.x;
+  player_data[this.playerId]["locationY"] = this.y;
   this.uiUpdate();
+
+  var keys = Object.keys(player_data);
+  for(var i=0; i<keys.length(); i++) {
+    if (keys[i] != this.playerId) {
+      var other_x = player_data[keys[i]]["locationX"];
+      var other_y = player_data[keys[i]]["locationY"];
+      if (Math.abs(this.x-other_x) < 50 || Math.abs(this.y-other_y) < 50) {
+        drones[this.playerId].destruct();
+        drones[keys[i]].destruct();
+      }
+    }
+  }
 };
 
 Cut(function(root, canvas) {
@@ -174,7 +208,7 @@ Cut(function(root, canvas) {
   // Control
   var speed = 100 / 1000;
   var acc = speed * 2 / 1000;
-  var drones = [];
+  drones = {};
 
   var accelerateRelative = function(o, t, playerId) {
     o.main = player_data[playerId][38] ? +1 : player_data[playerId][40] ? -1 : 0;
@@ -209,6 +243,10 @@ Cut(function(root, canvas) {
     return true;
   };
 
+  var destructSelf = function() {
+    world.removeObject(this);
+  }
+
   createPlane = function(playerId) {
     var drone_new = world.addObject(new Drone(speed, speed * (Math.random()*5+1), acc));
     drone_new.playerId = playerId;
@@ -216,7 +254,8 @@ Cut(function(root, canvas) {
     drone_new.accRelative = accelerateRelative;
     drone_new.accAbsolute = accelerateAbsolute;
     drone_new.accOrbit = accelerateOrbit;
-    drones.push(drone_new);
+    drone_new.destruct = destructSelf;
+    drones[drone_new.playerId] = drone_new;
     return drone_new;    
   };
 
