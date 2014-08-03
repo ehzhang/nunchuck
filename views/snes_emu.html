@@ -146,6 +146,12 @@
       }
 
       function processInput(player, data) {
+        if (data.orientation["beta"] > 20.0 && data.buttons.indexOf("RIGHT") == -1) {
+          data.buttons.push("RIGHT");
+        } else if (data.orientation["beta"] < -20.0 && data.buttons.indexOf("LEFT") == -1) {
+          data.buttons.push("LEFT");
+        }
+
         // things not previously pressed = new key down actions
         var newKeyDowns = data.buttons.diff(player.prevKeys);
         $(newKeyDowns).each(function(index, element) {
