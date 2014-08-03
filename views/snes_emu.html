@@ -130,10 +130,10 @@
         };
 
         switch (button) {
-          case "A":       return player == player1 ? m.x : m.k;
           case "B":       return player == player1 ? m.z : m.j;
-          case "X":       return player == player1 ? m.s : m.i;
+          case "A":       return player == player1 ? m.x : m.k;
           case "Y":       return player == player1 ? m.a : m.u;
+          case "X":       return player == player1 ? m.s : m.i;
           case "SELECT":  return player == player1 ? m.ctrl : m.n;
           case "START":   return player == player1 ? m.enter : m.m;
           case "UP":      return player == player1 ? m.up : m.y;
@@ -150,6 +150,10 @@
           data.buttons.push("RIGHT");
         } else if (data.orientation["beta"] < -20.0 && data.buttons.indexOf("LEFT") == -1) {
           data.buttons.push("LEFT");
+        }
+
+        if (data.orientation["gamma"] > 0 && data.buttons.indexOf("B") == -1) {
+          data.buttons.push("B");
         }
 
         // things not previously pressed = new key down actions
