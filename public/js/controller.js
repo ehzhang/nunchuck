@@ -20,7 +20,6 @@ function bounceOut(id){
             .css('display', 'none')
             .removeClass('animate bounceOut');
         });
-
 }
 
 function join(){
