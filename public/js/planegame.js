@@ -109,13 +109,13 @@ Drone.prototype.animate = function(t) {
     // m = out / inn / t / (this.aMax / this.v);
     // }
 
-  } else if (this.accAbsolute && this.accAbsolute(this.temp, t)) {
+  } else if (this.accAbsolute && this.accAbsolute(this.temp, t, this.playerId)) {
     var x = this.temp.x;
     var y = this.temp.y;
     var d = M.length(x, y);
     m = (x * this.vy - y * this.vx) / this.v / d * this.aMax;
 
-  } else if (this.accRelative && this.accRelative(this.temp, t)) {
+  } else if (this.accRelative && this.accRelative(this.temp, t, this.playerId)) {
     n = this.temp.main * 0.001;
     m = this.temp.side * this.aMax;
   }
@@ -174,20 +174,17 @@ Cut(function(root, canvas) {
   // Control
   var speed = 100 / 1000;
   var acc = speed * 2 / 1000;
-  var drone = world.addObject(new Drone(speed, speed * 2, acc));  
-  drone.playerId = "1234";
-  // replacement for down_keys
-  player_data[drone.playerId] = {};
+  var drones = [];
 
-  drone.accRelative = function(o, t) {
-    o.main = player_data[drone.playerId][38] ? +1 : player_data[drone.playerId][40] ? -1 : 0;
-    o.side = player_data[drone.playerId][37] ? +1 : player_data[drone.playerId][39] ? -1 : 0;
+  var accelerateRelative = function(o, t, playerId) {
+    o.main = player_data[playerId][38] ? +1 : player_data[playerId][40] ? -1 : 0;
+    o.side = player_data[playerId][37] ? +1 : player_data[playerId][39] ? -1 : 0;
     return o.side || o.main;
   };
 
-  drone.accAbsolute = function(o, t) {
-    o.x = player_data[drone.playerId][65] ? -1 : player_data[drone.playerId][68] ? +1 : 0;
-    o.y = player_data[drone.playerId][87] ? -1 : player_data[drone.playerId][83] ? +1 : 0;
+  var accelerateAbsolute = function(o, t, playerId) {
+    o.x = player_data[playerId][65] ? -1 : player_data[playerId][68] ? +1 : 0;
+    o.y = player_data[playerId][87] ? -1 : player_data[playerId][83] ? +1 : 0;
 
     if (o.x || o.y) {
       return true;
@@ -203,7 +200,7 @@ Cut(function(root, canvas) {
     return false;
   };
 
-  drone.accOrbit = function(o, t) {
+  var accelerateOrbit = function(o, t) {
     if (!_down_mouse.valid) {
       return false;
     }
@@ -211,6 +208,19 @@ Cut(function(root, canvas) {
     o.y = _down_mouse.y;
     return true;
   };
+
+  createPlane = function(playerId) {
+    var drone_new = world.addObject(new Drone(speed, speed * (Math.random()*5+1), acc));
+    drone_new.playerId = playerId;
+    player_data[drone_new.playerId] = {};
+    drone_new.accRelative = accelerateRelative;
+    drone_new.accAbsolute = accelerateAbsolute;
+    drone_new.accOrbit = accelerateOrbit;
+    drones.push(drone_new);
+    return drone_new;    
+  };
+
+  var drone = createPlane("1234");
 
   // Keyboard
 
