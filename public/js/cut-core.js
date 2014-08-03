@@ -28,6 +28,7 @@ function Cut() {
   this._cutouts = [];
   this._tickBefore = [];
   this._tickAfter = [];
+  
 
   this._alpha = 1;
 };

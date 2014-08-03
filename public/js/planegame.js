@@ -156,6 +156,7 @@ Cut(function(root, canvas) {
   Cut.Mouse(root, canvas);
 
   var world = new World();
+  this.down_keys = {37:false,38:false,39:false,40:false};
   var _down_keys = {}, _down_mouse = {
     x : 0,
     y : 0
@@ -172,20 +173,27 @@ Cut(function(root, canvas) {
   world.init(0, 0);
 
   // Control
-
   var speed = 100 / 1000;
   var acc = speed * 2 / 1000;
   var drone = world.addObject(new Drone(speed, speed * 2, acc));
 
   drone.accRelative = function(o, t) {
-    o.main = _down_keys[38] ? +1 : _down_keys[40] ? -1 : 0;
-    o.side = _down_keys[37] ? +1 : _down_keys[39] ? -1 : 0;
-    return o.side || o.main;
+    if (this.down_keys) {
+      // o.main = _down_keys[38] ? +1 : this.down_keys[40] ? -1 : 0;
+      o.main = this.down_keys[38] ? +1 : this.down_keys[40] ? -1 : 0;
+      // o.side = _down_keys[37] ? +1 : this.down_keys[39] ? -1 : 0;
+      o.side = this.down_keys[37] ? +1 : this.down_keys[39] ? -1 : 0;
+      return o.side || o.main;
+    } else {
+      return 0;
+    }
   };
 
   drone.accAbsolute = function(o, t) {
     o.x = _down_keys[65] ? -1 : _down_keys[68] ? +1 : 0;
+    // o.x = this.down_keys[65] ? -1 : this.down_keys[68] ? +1 : 0;
     o.y = _down_keys[87] ? -1 : _down_keys[83] ? +1 : 0;
+    // o.y = this.down_keys[87] ? -1 : this.down_keys[83] ? +1 : 0;
 
     if (o.x || o.y) {
       return true;
@@ -215,12 +223,15 @@ Cut(function(root, canvas) {
   document.onkeydown = function(e) {
     world.run(true);
     root.touch();
+    console.log(e);
     e = e || window.event;
-    _down_keys[e.keyCode] = true;
+    // _down_keys[e.keyCode] = true;
+    this.down_keys[e.keyCode] = true;
   };
   document.onkeyup = function(e) {
     e = e || window.event;
-    _down_keys[e.keyCode] = false;
+    // _down_keys[e.keyCode] = false;
+    this.down_keys[e.keyCode] = false;
   };
 
   // Mouse
