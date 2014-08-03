@@ -156,9 +156,6 @@ Cut(function(root, canvas) {
   Cut.Mouse(root, canvas);
 
   var world = new World();
-  this.down_keys = {37:false,38:false,39:false,40:false};
-  var _down_keys = {}, _down_mouse = {
-  var player_data = {};
   var _down_mouse = {
     x : 0,
     y : 0
@@ -178,27 +175,19 @@ Cut(function(root, canvas) {
   var speed = 100 / 1000;
   var acc = speed * 2 / 1000;
   var drone = world.addObject(new Drone(speed, speed * 2, acc));  
-  drone.playerId = "someid";
-  // replacement for _down_keys
+  drone.playerId = "1234";
+  // replacement for down_keys
   player_data[drone.playerId] = {};
 
   drone.accRelative = function(o, t) {
-    if (this.down_keys) {
-      // o.main = _down_keys[38] ? +1 : this.down_keys[40] ? -1 : 0;
-      o.main = this.down_keys[38] ? +1 : this.down_keys[40] ? -1 : 0;
-      // o.side = _down_keys[37] ? +1 : this.down_keys[39] ? -1 : 0;
-      o.side = this.down_keys[37] ? +1 : this.down_keys[39] ? -1 : 0;
-      return o.side || o.main;
-    } else {
-      return 0;
-    }
+    o.main = player_data[drone.playerId][38] ? +1 : player_data[drone.playerId][40] ? -1 : 0;
+    o.side = player_data[drone.playerId][37] ? +1 : player_data[drone.playerId][39] ? -1 : 0;
+    return o.side || o.main;
   };
 
   drone.accAbsolute = function(o, t) {
-    o.x = _down_keys[65] ? -1 : _down_keys[68] ? +1 : 0;
-    // o.x = this.down_keys[65] ? -1 : this.down_keys[68] ? +1 : 0;
-    o.y = _down_keys[87] ? -1 : _down_keys[83] ? +1 : 0;
-    // o.y = this.down_keys[87] ? -1 : this.down_keys[83] ? +1 : 0;
+    o.x = player_data[drone.playerId][65] ? -1 : player_data[drone.playerId][68] ? +1 : 0;
+    o.y = player_data[drone.playerId][87] ? -1 : player_data[drone.playerId][83] ? +1 : 0;
 
     if (o.x || o.y) {
       return true;
@@ -228,15 +217,12 @@ Cut(function(root, canvas) {
   document.onkeydown = function(e) {
     world.run(true);
     root.touch();
-    console.log(e);
     e = e || window.event;
-    // _down_keys[e.keyCode] = true;
-    // this.down_keys[e.keyCode] = true;
-    player_data["someid"][e.keyCode] = true;
+    player_data[drone.playerId][e.keyCode] = true;
   };
   document.onkeyup = function(e) {
     e = e || window.event;
-    player_data["someid"][e.keyCode] = false;
+    player_data[drone.playerId][e.keyCode] = false;
   };
 
   // Mouse
