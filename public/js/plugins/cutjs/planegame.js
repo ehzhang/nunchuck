@@ -317,7 +317,7 @@ Cut(function(root, canvas) {
 
 Drone.prototype.uiCreate = function(world) {
   this.world = world;
-  this.ui = (this.ui || Cut.image("base:drone").pin("handle", 0.5))
+  this.ui = (this.ui || Cut.image("base:drone" + Math.floor(Math.random()*4 + 1)).pin("handle", 0.5))
       .appendTo(world.ui);
 
   this.uiUpdate();
