@@ -28,23 +28,24 @@
 movePlane = function(obj) {
   var possible_commands = ["leftArrow", "rightArrow", "upArrow", "downArrow", "A", "B", "LT", "RT", "start"];
   var pressed_buttons = obj.buttons;
+  var user_id = obj.id;
 
   // change this
   var active_commands = {"leftArrow":37, "rightArrow":39, "upArrow":38, "downArrow":40};
 
 
   console.log(pressed_buttons);
-  console.log(this.down_keys);
+  console.log("in move plane: " + down_keys);
 
   for (var i=0; i<possible_commands.length; i++) {
     command = possible_commands[i];
     if (pressed_buttons.indexOf(command) > -1) {
-      this.down_keys[active_commands[command]] = true;
-    } else {
-      this.down_keys[active_commands[command]] = false;
+      player_data[user_id][active_commands[command]] = true;
+      console.log(down_keys);
+    } else if (active_commands[command]) {
+      player_data[user_id][active_commands[command]] = false;
     }
     
   }
-  console.log("down keys: " + this.down_keys);
 }
 
