@@ -513,8 +513,6 @@ Drone.prototype.uiRemove = function() {
 Drone.prototype.shoot = function () {
   var bulletId = Math.floor(Math.random()*9000000 + 1000000);
   bulletId += 'a';
-
-  debugger;
   createBullet(bulletId, this.x+7, this.y+7, this.dir, this.vx, this.vy);
 }
 
