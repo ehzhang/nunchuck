@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Snes9x + Nunchuck = <3</title>
+    <style>
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      textarea.emscripten { font-family: monospace; width: 80%; }
+      div.emscripten, h1 { text-align: center; }
+      div.emscripten_border { border: 1px solid black; }
+      #fakerom { font-size: 20pt; margin: 5pt;}
+      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+      canvas.emscripten { border: 0px none; }
+    </style>
+  </head>
+  <body>
+    <h1>Snes9x + Nunchuck = <3</h1>
+    <hr/>
+    <div class="emscripten" id="status">Downloading...</div>
+    <div class="emscripten">
+      <progress value="0" max="100" id="progress" hidden=1></progress>  
+    </div>
+    <div class="emscripten_border" id="canvas_div" style="display: none">
+      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    </div>
+    <div class="emscripten emscripten_border" id="openrom">
+      <button id="fakerom" onclick="document.getElementById('rom').click()">Select a SNES ROM</button>
+      <input style="display: none" type="file" id="rom" name="upload" onclick="document.getElementById('fakerom').click();" onchange="runEmulator(event.target.files);" multiple />
+    </div>
+    <hr/>
+    <div class="emscripten">
+      
+      <input type="checkbox" id="resize"><label for="resize">Resize canvas</label>
+      <input type="checkbox" id="pointerLock" checked><label for="pointerLock">Lock/hide mouse pointer</label>
+      &nbsp;&nbsp;&nbsp;
+      <input type="button" value="Fullscreen" onclick="Module.requestFullScreen(document.getElementById('pointerLock').checked, 
+                                                                                document.getElementById('resize').checked)"><br>
+      <input type="checkbox" id="vsync"><label for="vsync" id="vsync-label">Enable V-sync (can only be done before loading game)</label><br>
+      <input type="textbox" id="latency" size="3" maxlength="3" value="96"> <label for="latency" id="latency-label">Audio latency (ms) (increase if you hear pops at fullspeed, can only be done before loading game)</label>
+    </div>
+    <script type='text/javascript'>
+      var count = 0;
+      function runEmulator(files){
+        count = files.length;
+        document.getElementById("openrom").innerHTML = '';
+        document.getElementById("openrom").style.display = 'none';
+        for (var i = 0; i < files.length; i++) {
+          filereader = new FileReader();
+          filereader.file_name = files[i].name;
+          filereader.onload = function(){initFromData(this.result, this.file_name)};
+          filereader.readAsArrayBuffer(files[i]);
+        }
+      }
+
+      function initFromData(data, name){
+        var dataView = new Uint8Array(data);
+        Module.FS_createDataFile('/', name, dataView, true, false);
+        count--;
+        if (count === 0) {
+          Module.FS_createFolder('/', 'etc', true, true);
+          var config = '####### Player 1 #######\ninput_player1_b = "z"\ninput_player1_a = "x"\ninput_player1_y = "a"\ninput_player1_x = "s"\ninput_player1_select = "ctrl"\ninput_player1_start = "enter"\ninput_player1_up = "up"\ninput_player1_down = "down"\ninput_player1_left = "left"\ninput_player1_right = "right"\ninput_player1_l = "q"\ninput_player1_r = "w"\n\n####### Player 2 #######\ninput_player2_b = "j"\ninput_player2_a = "k"\ninput_player2_y = "u"\ninput_player2_x = "i"\ninput_player2_select = "n"\ninput_player2_start = "m"\ninput_player2_up = "y"\ninput_player2_down = "b"\ninput_player2_left = "g"\ninput_player2_right = "h"\ninput_player2_l = "c"\ninput_player2_r = "v"';
+          var latency = parseInt(document.getElementById('latency').value, 10);
+          if (isNaN(latency)) latency = 962;
+          config += 'audio_latency = ' + latency + '\n'
+          if (document.getElementById('vsync').checked)
+            config += 'video_vsync = true\n';
+          else
+            config += 'video_vsync = false\n';
+
+          console.log(config);
+          Module.FS_createDataFile('/etc', 'retroarch.cfg', config, true, true);
+
+          document.getElementById('canvas_div').style.display = 'block';
+          document.getElementById('vsync').disabled = true;
+          document.getElementById('vsync-label').style.color = 'gray';
+          document.getElementById('latency').disabled = true;
+          document.getElementById('latency-label').style.color = 'gray';
+          Module['callMain'](Module['arguments']);
+        }
+      }
+    </script>
+    <script type='text/javascript'>
+      // connect to canvas
+      var Module = {
+	     noInitialRun: true,
+		  arguments: ["-v", "--menu"],
+        preRun: [],
+        postRun: [],
+        canvas: document.getElementById('canvas'),
+        setStatus: function(text) {
+          if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
+          var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+          var statusElement = document.getElementById('status');
+          var progressElement = document.getElementById('progress');
+          if (m) {
+            text = m[1];
+            progressElement.value = parseInt(m[2])*100;
+            progressElement.max = parseInt(m[4])*100;
+            progressElement.hidden = false;
+          } else {
+            progressElement.value = null;
+            progressElement.max = null;
+            progressElement.hidden = true;
+          }
+          statusElement.innerHTML = text;
+        },
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+        }
+      };
+      Module.setStatus('Downloading...');
+    </script>
+	<script type="text/javascript" src="js/plugins/snes9x/snes9x-next.js"></script>
