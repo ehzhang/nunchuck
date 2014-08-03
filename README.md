@@ -7,7 +7,6 @@ Overview
 
 We provide a platform that easily allows developers to integrate mobile browser controls into desktop browser javascript-based games in very few lines of code.
 
-### Disclaimer
 Made with <3 at YCHacks 2014!
 
 Pull requests and feature suggestions are welcome.
