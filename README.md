@@ -26,7 +26,7 @@ Tilt left or right to steer. Tilt forward to accelerate or backwards to decelera
 
 You can play our multiplayer MarioKart demo by navigating to http://nunchuckjs.com/snes in any desktop browser.
 
-Use your phone as a controller by navigating to http://nunchuckjs.com on a mobile browser, then selecting "GAMEPAD." You will then be able to use the arrowkeys to select a character. Tilt your phone down to select.
+Use your phone as a controller by navigating to http://nunchuckjs.com on a mobile browser, then selecting "GAMEPAD." You will then be able to use the arrowkeys to select a character. Tilt your phone down or press "B" to select.
 
 Tilt left or right to steer, and tilt forwards and backwards to accelerate and decelerate, respectively. Press A to use items.
 
