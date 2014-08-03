@@ -150,7 +150,8 @@ n.onJoin(function(data){
 });
 ```
 
-
+Demo
+-------------
 To start the demo site locally:
 
 ```sh
@@ -158,6 +159,8 @@ $ npm install
 $ npm start
 ```
 
+License
+-------------
 Available under the MIT License
 
 Copyright (c) 2014 [ehzhang](https://github.com/ehzhang), [ankushg](https://github.com/ankushg), [anubhav94](https://github.com/anubhav94), [kathrynsiegel](https://github.com/kathrynsiegel)
