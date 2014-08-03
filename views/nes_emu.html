@@ -17,16 +17,16 @@
     <script src="js/plugins/jsnes/lib/dynamicaudio-min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/plugins/jsnes/jsnes.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
-        var nes;
-        $(function() {
-            nes = new JSNES({
-                'ui': $('#emulator').JSNESUI({
-                    "Homebrew": [
-                        ['LJ65', 'assets/roms/lj65/lj65.nes'],
-                    ]
-                })
-            });
-        });
+      var nes;
+      $(function() {
+          nes = new JSNES({
+              'ui': $('#emulator').JSNESUI({
+                  "Homebrew": [
+                      ['LJ65', 'assets/roms/lj65/lj65.nes'],
+                  ]
+              })
+          });
+      });
       var socket = io();
       var n = nunchuck.init('host', socket);
 
