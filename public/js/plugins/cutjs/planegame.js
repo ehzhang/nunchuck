@@ -66,7 +66,7 @@ World.prototype.calculateElapsed = function() {
 };
 
 function Splat(xloc, yloc) {
-  
+
   this.x = xloc;
   this.y = yloc;
   console.log(this.x);
@@ -144,8 +144,8 @@ Splat.prototype.animate = function(t) {
 // };
 
 function Drone(vMin, vMax, aMax,type) {
-  this.x = 0;
-  this.y = 0;
+  this.x = Math.floor(Math.random() * 100);
+  this.y = Math.floor(Math.random() * 100);
   this.vMin = vMin;
   this.vMax = vMax;
   this.aMax = aMax;
@@ -246,7 +246,7 @@ Drone.prototype.animate = function(t) {
       var other_y = player_data[keys[i]]["locationY"];
 
 
-      if (Math.abs(this.x-other_x) < 50 && Math.abs(this.y-other_y) < 50) {
+      if (Math.abs(this.x-other_x) < 5 && Math.abs(this.y-other_y) < 5) {
         console.log("dead: ", other_x, this.x);
         console.log("deady: ", other_y, this.y);
         var dead1 = drones[this.playerId];
@@ -257,7 +257,18 @@ Drone.prototype.animate = function(t) {
         dead2.destruct();
 
       }
+    } else if (keys[i][keys[i].length-1] == "a" || this.playerId[this.playerId.length - 1] == "a") {
+      var other_x = player_data[keys[i]]["locationX"];
+      var other_y = player_data[keys[i]]["locationY"];
+
+      // Remove bullets if they go off screen
+      if (this.world.xMax - other_x < 5 || other_x - this.world.xMin < 5 || this.world.yMax - other_y < 5 || other_y - this.world.yMin < 5) {
+        var bullet = drones[keys[i]];
+        bullet.destruct();
+      };
+
     }
+
   }
   // var bulletKeys = Object.keys(bullets);
   // for(var j=0; j<bulletKeys.length; j++) {
@@ -338,7 +349,9 @@ Cut(function(root, canvas) {
     console.log("earlierx: ",x_ind);
     console.log("earliery: ",y_ind);
     world.removeObject(this);
-    world.addObject(new Splat(x_ind, y_ind));
+    if (this.playerId[this.playerId.length-1]!='a') {
+      world.addObject(new Splat(x_ind, y_ind));
+    }
   }
 
   // var createBullet = function() {
@@ -534,7 +547,7 @@ Drone.prototype.uiRemove = function() {
 Drone.prototype.shoot = function () {
   var bulletId = Math.floor(Math.random()*9000000 + 1000000);
   bulletId += 'a';
-  createBullet(bulletId, this.x+7, this.y+7, this.dir, this.vx, this.vy);
+  createBullet(bulletId, this.x+10, this.y+10, this.dir, this.vx, this.vy);
 }
 
 var M = Cut.Math;
