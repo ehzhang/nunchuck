@@ -10,6 +10,7 @@ function isCallerMobile(req) {
 
 /* GET home page. */
 
+// Detect if mobile
 router.use(function(req, res, next){
   if (isCallerMobile(req)){
     res.sendfile('views/controller.html')

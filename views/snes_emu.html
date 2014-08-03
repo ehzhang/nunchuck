@@ -10,6 +10,8 @@
       canvas { border: 0px none; }
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link href='stylesheets/normalize.css' rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/nunchuck.js"></script>
     <script src="js/plugins/podium.js"></script>
@@ -182,11 +184,43 @@
 
       });
       // TODO: disconnect resets player1/player2 to null? pause the game?
+
+      $(document).ready(function(){
+        $('.room').text("Room ID: " + n.roomId)
+      })
+
     </script>
+
+    <style>
+      body {
+        font-family: 'Montserrat', 'Helvetic Neue', 'Helvetica', sans-serif;
+        text-align: center;
+        background: #1f1f1f;
+        color: white;
+      }
+
+      input[type='button'],
+      button {
+        border: 2px solid white;
+        border-radius: 0;
+        background: none;
+        padding: 8px;
+      }
+
+      input {
+        background: none;
+        color: white;
+      }
+
+      #openrom {
+        margin-bottom: 16px;
+      }
+
+    </style>
   </head>
   <body>
     <h1>Snes9x + Nunchuck = &lt;3</h1>
-    <hr/>
+    <h1 class="room"></h1>
     <div id="status">Downloading...</div>
     <div id="canvas_div" style="display: none">
       <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
@@ -195,7 +229,6 @@
       <button id="fakerom" onclick="document.getElementById('rom').click()">Select a SNES ROM</button>
       <input style="display: none" type="file" id="rom" name="upload" onclick="document.getElementById('fakerom').click();" onchange="runEmulator(event.target.files);" multiple />
     </div>
-    <hr/>
     <div>
       <input type="checkbox" id="resize" checked><label for="resize">Resize canvas</label>
       <input type="checkbox" id="pointerLock" checked><label for="pointerLock">Lock/hide mouse pointer</label>
