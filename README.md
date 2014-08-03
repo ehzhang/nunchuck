@@ -7,7 +7,7 @@ Overview
 
 We provide a platform that easily allows developers to integrate mobile browser controls into desktop browser-based javascript games with very few (<15) lines of code.
 
-Made with <3 at YCHacks 2014! 
+Made with :heart: at YCHacks 2014! 
 
 Pull requests and feature suggestions are welcome.
 
