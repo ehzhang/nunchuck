@@ -1,0 +1,212 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+button:focus {
+  outline: none;
+}
+
+button.big {
+  text-transform: uppercase;
+  font-family: 'Montserrat', 'Helvetica', 'Helvetica Neue', sans-serif;
+  font-size: 2em;
+  margin: 0;
+  background: none;
+  height: 50%;
+  width: 100%;
+  border: none;
+  color: white;
+}
+
+button.connect {
+  background: #458CCE;
+}
+
+button.gamepad {
+  background: #3A3A3A;
+}
+
+section {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,.9);
+  display: none;
+}
+
+section .content {
+  text-align: center;
+}
+
+section button.close {
+  position: fixed;
+  font-family: 'Montserrat', 'Helvetica', 'Helvetica Neue', sans-serif !important;
+  font-size: 1.7em;
+}
+
+section button.close:after {
+  content: "\00d7";
+}
+
+#join {
+  padding-top: 25%;
+}
+
+#join button.close {
+  top: 8px;
+  right: 8px;
+}
+
+#join input[type='text'],
+#join input[type='tel'],
+#join button {
+  font-family: 'Montserrat', 'Helvetica', 'Helvetica Neue', sans-serif;
+  border-radius: 0;
+  border: none;
+  background: none;
+  color: white;
+  text-align: center;
+}
+
+#join input[type='text'],
+#join input[type='tel'] {
+  font-size: 3em;
+  padding: 0;
+  width: 300px;
+}
+
+#join button.outline {
+  font-size: 1.5em;
+  margin-top: 16px;
+  border: 1px solid white;
+  padding: 12px;
+  width: 200px;
+}
+
+input:focus {
+  outline: none;
+}
+
+#controller {
+  background: #181818;
+}
+
+#controller .content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#controller button {
+  font-family: 'Montserrat', 'Helvetica', 'Helvetica Neue', sans-serif;
+  background: none;
+  border: none;
+  color: white;
+}
+
+#controller button.close {
+  bottom: 8px;
+  right: 8px;
+}
+
+.d-pad {
+  position: absolute;
+  top: 48px;
+  left: 80px;
+
+  font-size: 1.4em;
+}
+
+.d-pad button {
+  background: #ac2226 !important;
+  height: 60px;
+  width: 60px;
+  border-radius: 100%;
+}
+
+.d-pad button.vertical {
+}
+
+.d-pad button.horizontal {
+  display: block;
+  margin: -.4em 2.6em;
+}
+
+#LEFT {
+
+}
+
+#RIGHT {
+  margin-top: -14px;
+}
+
+#DOWN {
+  margin-right: 1.5em;
+}
+
+#UP {
+
+}
+
+.commands {
+  position: absolute;
+  left: 16px;
+}
+
+.commands button {
+  background: #808080 !important;
+  margin-right: 8px;
+  border-radius: 40px;
+  padding: 12px;
+}
+
+.right.commands button {
+  display: block;
+  background: #264e73 !important;
+  border-radius: 0;
+  margin-top: 16px;
+  width: 70px;
+  height: 70px;
+  padding: 12px;
+}
+
+
+#START {
+}
+
+#SELECT {
+}
+
+#A {
+}
+
+#B {
+
+}
+
+.commands {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+
+  transform-origin: 0% 100%;
+  -ms-transform-origin:0% 100%;
+  -webkit-transform-origin:0% 100%;
+}
+
+.left.commands {
+  position: absolute;
+  top: 0;
+}
+
+.right.commands {
+  position: absolute;
+  bottom: 90px;
+}
