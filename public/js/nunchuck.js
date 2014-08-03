@@ -25,6 +25,7 @@
     this.roomId = this.id;
     this.type = options.type;
     this.socket = options.socket;
+    this.prevData = null;
 
     if (this.type == 'host'){
       this.socket.emit('nunchuck-create', this.id);
@@ -67,12 +68,13 @@
             betaThreshold: 5,
             gammaThreshold: 5,
             radians: false
-          },
-          prevData = {
-            alpha: 0,
-            beta: 0,
-            gamma: 0
           };
+
+      _instance.prevData = {
+        alpha: 0,
+        beta: 0,
+        gamma: 0
+      };
 
       window.addEventListener('deviceorientation', function (eventData) {
 
@@ -82,9 +84,9 @@
           gamma: options.radians ? eventData.gamma * Math.PI / 180.0 : eventData.gamma
         };
 
-        if(Math.abs(data.alpha - prevData.alpha) >= options.alphaThreshold ||
-            Math.abs(data.beta - prevData.beta) >= options.betaThreshold ||
-            Math.abs(data.gamma - prevData.gamma) >= options.gammaThreshold
+        if(Math.abs(data.alpha - _instance.prevData.alpha) >= options.alphaThreshold ||
+            Math.abs(data.beta - _instance.prevData.beta) >= options.betaThreshold ||
+            Math.abs(data.gamma - _instance.prevData.gamma) >= options.gammaThreshold
             ) {
 
           _instance.socket.emit('nunchuck-data',
@@ -95,10 +97,28 @@
               orientation: data,
               timestamp: Date.now()
             });
-          prevData = data;
+          _instance.prevData = data;
         }
       })
     }
+
+    // Add button listeners
+    var buttons = document.getElementsByClassName('nunchuck-button');
+
+    for(var i = 0; i < buttons.length; i++){
+      buttons[i].addEventListener('click', function(e){
+        _instance.socket.emit('nunchuck-data',
+          {
+            username: _instance.username,
+            roomId: _instance.roomId,
+            buttons: [this.id],
+            orientation: _instance.prevData,
+            timestamp: Date.now()
+          });
+      })
+    }
+
+
   };
 
   Nunchuck.prototype.receive = function(callback){
