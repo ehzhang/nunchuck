@@ -158,6 +158,8 @@ Cut(function(root, canvas) {
   var world = new World();
   this.down_keys = {37:false,38:false,39:false,40:false};
   var _down_keys = {}, _down_mouse = {
+  var player_data = {};
+  var _down_mouse = {
     x : 0,
     y : 0
   };
@@ -175,7 +177,10 @@ Cut(function(root, canvas) {
   // Control
   var speed = 100 / 1000;
   var acc = speed * 2 / 1000;
-  var drone = world.addObject(new Drone(speed, speed * 2, acc));
+  var drone = world.addObject(new Drone(speed, speed * 2, acc));  
+  drone.playerId = "someid";
+  // replacement for _down_keys
+  player_data[drone.playerId] = {};
 
   drone.accRelative = function(o, t) {
     if (this.down_keys) {
@@ -226,12 +231,12 @@ Cut(function(root, canvas) {
     console.log(e);
     e = e || window.event;
     // _down_keys[e.keyCode] = true;
-    this.down_keys[e.keyCode] = true;
+    // this.down_keys[e.keyCode] = true;
+    player_data["someid"][e.keyCode] = true;
   };
   document.onkeyup = function(e) {
     e = e || window.event;
-    // _down_keys[e.keyCode] = false;
-    this.down_keys[e.keyCode] = false;
+    player_data["someid"][e.keyCode] = false;
   };
 
   // Mouse
@@ -318,9 +323,7 @@ Drone.prototype.uiCreate = function(world) {
   this.world = world;
   this.ui = (this.ui || Cut.image("base:drone").pin("handle", 0.5))
       .appendTo(world.ui);
-  this.ui2 = (this.ui2 || Cut.image("base:drone").pin("handle", 0.5).pin({
-    alpha : 0.2
-  })).appendTo(world.ui);
+
   this.uiUpdate();
 };
 
@@ -336,18 +339,12 @@ Drone.prototype.uiUpdate = function() {
   };
 
   this.ui.xy(x, y).pin(pin);
-  this.ui2.xy(x + 30, y + 30).pin(pin);
 };
 
 Drone.prototype.uiRemove = function() {
   if (this.ui) {
     this.ui.remove();
     this.ui = null;
-  }
-
-  if (this.ui2) {
-    this.ui2.remove();
-    this.ui2 = null;
   }
 };
 
