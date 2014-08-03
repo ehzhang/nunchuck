@@ -98,51 +98,6 @@ Splat.prototype.animate = function(t) {
   this.uiUpdate();
 };
 
-
-
-
-// function Bullet(xloc, yloc, xvel, yvel, parent_id) {
-//   this.x = xloc;
-//   this.y = yloc;
-//   this.vx = xvel;
-//   this.vy = yvel;
-//   this.parentid = parent_id;
-// }
-
-// Bullet.prototype.uiCreate = function(world) {
-//   this.world = world;
-//   this.ui = (this.ui || Cut.image("base:bullet").pin("handle", 0.5))
-//     .appendTo(world.ui);
-//   console.log(this.ui);
-// }
-
-// Bullet.prototype.animate = function(t) {
-//   this.x = this.x + this.vx;
-//   this.y = this.y + this.vy;
-//   this.uiUpdate();
-// }
-
-// Bullet.prototype.uiUpdate = function() {
-//   if (!this.ui)
-//     return;
-//   var x = this.x;
-//   var y = this.y;
-
-//   var pin = {
-//     rotation : 0,
-//     scaleY : 1 / Math.PI * 400
-//   };
-
-//   this.ui.xy(x, y).pin(pin);
-// };
-
-// Bullet.prototype.uiRemove = function() {
-//   if (this.ui) {
-//     this.ui.remove();
-//     this.ui = null;
-//   }
-// };
-
 function Drone(vMin, vMax, aMax,type) {
   this.x = Math.floor(Math.random() * 100);
   this.y = Math.floor(Math.random() * 100);
@@ -236,8 +191,23 @@ Drone.prototype.animate = function(t) {
   this.y = M.rotate(this.y + this.vy * t, this.world.yMin, this.world.yMax);
   player_data[this.playerId]["locationX"] = this.x;
   player_data[this.playerId]["locationY"] = this.y;
+
+  if (this.playerId.slice(-1) == "a" && (
+      this.x + this.vx * t > this.world.xMax ||
+      this.x + this.vx * t < this.world.xMin ||
+      this.y + this.vy * t > this.world.yMax ||
+      this.y + this.vy * t < this.world.yMin)) {
+
+    if (drones[this.playerId]){
+      var bullet = drones[this.playerId];
+      delete drones[this.playerId];
+      bullet.destruct();
+    }
+  }
+
   this.uiUpdate();
 
+  var CRASH_SEPARATION_INDEX = 10
 
   var keys = Object.keys(drones);
   for(var i=0; i<keys.length; i++) {
@@ -245,8 +215,7 @@ Drone.prototype.animate = function(t) {
       var other_x = player_data[keys[i]]["locationX"];
       var other_y = player_data[keys[i]]["locationY"];
 
-
-      if (Math.abs(this.x-other_x) < 5 && Math.abs(this.y-other_y) < 5) {
+      if (Math.abs(this.x-other_x) < CRASH_SEPARATION_INDEX && Math.abs(this.y-other_y) < CRASH_SEPARATION_INDEX) {
         console.log("dead: ", other_x, this.x);
         console.log("deady: ", other_y, this.y);
         var dead1 = drones[this.playerId];
@@ -262,32 +231,8 @@ Drone.prototype.animate = function(t) {
         }
 
       }
-    } else if (keys[i][keys[i].length-1] == "a" || this.playerId[this.playerId.length - 1] == "a") {
-      var other_x = player_data[keys[i]]["locationX"];
-      var other_y = player_data[keys[i]]["locationY"];
-
-      // Remove bullets if they go off screen
-      if (this.world.xMax - other_x < 5 || other_x - this.world.xMin < 5 || this.world.yMax - other_y < 5 || other_y - this.world.yMin < 5) {
-        var bullet = drones[keys[i]];
-        delete drones[keys[i]];
-        bullet.destruct();
-      };
-
     }
-
   }
-  // var bulletKeys = Object.keys(bullets);
-  // for(var j=0; j<bulletKeys.length; j++) {
-  //   var other_x = bullets[bulletKeys[j]].x;
-  //   var other_y = bullets[bulletKeys[j]].y;
-  //   if (this.playerId != bullets[bulletKeys[j]].parentid && Math.abs(this.x-other_x) < 40 && Math.abs(this.y-other_y) < 40) {
-  //     delete bulletKeys[j];
-  //     dead = drones[this.playerId];
-  //     delete drones[this.playerId];
-  //     dead.destruct();
-
-  //   }
-  // }
 };
 
 Cut(function(root, canvas) {
@@ -556,7 +501,7 @@ Drone.prototype.uiRemove = function() {
 Drone.prototype.shoot = function () {
   var bulletId = Math.floor(Math.random()*9000000 + 1000000);
   bulletId += 'a';
-  createBullet(bulletId, this.vx * 2 + this.x, this.vy * 2 + this.y, this.dir, this.vx, this.vy);
+  createBullet(bulletId, this.vx * 200 + this.x, this.vy * 200 + this.y, this.dir, this.vx, this.vy);
 };
 
 var M = Cut.Math;
