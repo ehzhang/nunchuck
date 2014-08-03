@@ -73,11 +73,4 @@ movePlane = function(obj) {
   }
 }
 
-// {
-//   username: "Katie",
-//   id: "1234",
-//   success: true
-// }
-
-
 
