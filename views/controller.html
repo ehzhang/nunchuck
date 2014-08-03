@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Base! </title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="js/nunchuck.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/controller.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
 
     <!-- Stylin' -->
+    <link href="stylesheets/normalize.css" rel="stylesheet" type="text/css">
     <link href="stylesheets/animate.css" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
@@ -45,24 +46,29 @@
     </section>
 
     <section id="controller" style="display:block">
-      <div class="d-pad">
-        <button class="nunchuck-button" id="UP">UP</button>
-        <button class="nunchuck-button" id="DOWN">DOWN</button>
-        <button class="nunchuck-button" id="LEFT">LEFT</button>
-        <button class="nunchuck-button" id="RIGHT">RIGHT</button>
-      </div>
 
-      <div class="action">
-        <button class="nunchuck-button" id="A">A</button>
-        <button class="nunchuck-button" id="B">B</button>
-      </div>
+      <div class="content">
 
-      <div class="commands">
-        <button class="nunchuck-button" id="START">START</button>
-        <button class="nunchuck-button" id="SELECT">SELECT</button>
-      </div>
+        <button class="close" onclick="bounceOut('controller')"></button>
 
-      <button class="close" onclick="bounceOut('controller')"></button>
+        <div class="d-pad">
+          <button class="nunchuck-button horizontal" id="LEFT"></button>
+          <button class="nunchuck-button vertical" id="DOWN"></button>
+          <button class="nunchuck-button vertical" id="UP"></button>
+          <button class="nunchuck-button horizontal" id="RIGHT"></button>
+        </div>
+
+        <div class="left commands">
+          <button class="nunchuck-button" id="START">START</button>
+          <button class="nunchuck-button" id="SELECT">SELECT</button>
+        </div>
+
+        <div class="right commands">
+          <button class="nunchuck-button" id="B">B</button>
+          <button class="nunchuck-button" id="A">A</button>
+        </div>
+
+      </div>
 
     </section>
 

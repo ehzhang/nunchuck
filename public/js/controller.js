@@ -31,4 +31,3 @@ function bounceIn(id){
       .addClass('animate bounceIn')
       .css('display', 'block');
 }
-
