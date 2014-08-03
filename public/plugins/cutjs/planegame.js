@@ -192,7 +192,7 @@ Drone.prototype.animate = function(t) {
   player_data[this.playerId]["locationX"] = this.x;
   player_data[this.playerId]["locationY"] = this.y;
 
-  if (this.playerId.slice(-1) == "a" && (
+  if (this.playerId[this.playerId.length - 1] == "a" && (
       this.x + this.vx * t > this.world.xMax ||
       this.x + this.vx * t < this.world.xMin ||
       this.y + this.vy * t > this.world.yMax ||
