@@ -11,17 +11,6 @@
 //   timestamp: "18375235899" // ms since epoch (timestamp)
 // }
 
-// POTENTIAL BUTTONS
-// “leftArrow”
-// ”rightArrow”
-// ”upArrow”
-// ”downArrow”
-// “A”
-// “B”
-// “LT”
-// “RT”
-// “start”
-
 // Sample call:
 // movePlane({username: "katie", id: "1234", buttons: ["leftArrow"], orientation: {alpha: 0.0, beta: 0.0, gamma: 0.0}, timestamp: "1238794"});
 

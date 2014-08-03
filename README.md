@@ -60,6 +60,28 @@ require('./server/nunchuck-server')(io);
 Documentation
 -------------
 
+### Buttons
+
+nunchuck.js responds to both acceleration and button push events. You can customize the buttons in the mobile browser view. Assign each button a class "nunchuck-button." Also assign each button a unique ID (e.g. "LEFT", "RIGHT", etc.) that will be sent to the receiver (the desktop browser) when that button is pressed.
+
+Sample Usage:
+```html
+<div class="d-pad">
+    <button class="nunchuck-button horizontal" id="LEFT"></button>
+    <button class="nunchuck-button vertical" id="DOWN"></button>
+    <button class="nunchuck-button vertical" id="UP"></button>
+    <button class="nunchuck-button horizontal" id="RIGHT"></button>
+</div>
+<div class="left commands">
+    <button class="nunchuck-button" id="START">START</button>
+    <button class="nunchuck-button" id="SELECT">SELECT</button>
+</div>
+<div class="right commands">
+	<button class="nunchuck-button" id="B">B</button>
+	<button class="nunchuck-button" id="A">A</button>
+</div>
+```
+
 ### nunchuck.onJoin(callback)
 
 Fired when a phone connects to a channel corresponding to this particular web browser view.
@@ -75,7 +97,7 @@ The phone sends a JSON object with the following spec:
 ```
 
 Data              | Description                               
------------------ | -----------------------------------------
+----------------- | -----------------------------------------------------
 username          | (string) inputted username of player 
 id                | (integer) generated ID of player 
 success           | (boolean) whether or not the controller successfully joined a room
@@ -110,10 +132,10 @@ The phone sends a JSON object with the following spec:
 ```
 
 Data              | Description                               
------------------ | -----------------------------------------
+----------------- | ---------------------------------------------------
 username          | (string) inputted username of player 
 id                | (integer) generated ID of player 
-buttons           | (array) array of 
+buttons           | (array) array of button IDs of buttons currently pressed by player
 orientation.alpha | (float) degree/radian value for direction the device is
 orientation.beta  | (float) degree/radian value for device's front-back tilt
 orientation.gamma | (float) degree/radian value for device's left-right tilt  
