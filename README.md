@@ -1,11 +1,11 @@
 # nunchuck.js
 
-A platform for mobile web-based control of browser applications.
+A library for mobile web-based control of browser applications.
 
 Overview
 --------
 
-We provide a platform that easily allows developers to integrate mobile browser controls into desktop browser-based javascript games with very few (<15) lines of code.
+We provide a library that easily allows developers to integrate mobile browser controls into desktop browser-based javascript games with very few (<15) lines of code.
 
 Made with :heart: at YCHacks 2014! 
 
