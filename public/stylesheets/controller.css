@@ -117,7 +117,7 @@ input:focus {
 .d-pad {
   position: absolute;
   top: 48px;
-  right: 24px;
+  left: 80px;
 
   font-size: 1.4em;
 }
