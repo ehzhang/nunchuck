@@ -28,6 +28,7 @@
 movePlane = function(obj) {
   var possible_commands = ["leftArrow", "rightArrow", "upArrow", "downArrow", "A", "B", "LT", "RT", "start"];
   var pressed_buttons = obj.buttons;
+  var orientation = obj.orientation;
   var user_id = obj.id;
 
   // change this
@@ -45,7 +46,31 @@ movePlane = function(obj) {
     } else if (active_commands[command]) {
       player_data[user_id][active_commands[command]] = false;
     }
-    
+  }
+
+  if (orientation["beta"] > 20.0) {
+    player_data[user_id][active_commands["rightArrow"]] = true;
+  } else if (orientation["beta"] < -20.0) {
+    player_data[user_id][active_commands["leftArrow"]] = true;
+  } else {
+    player_data[user_id][active_commands["leftArrow"]] = false;
+  }
+
+  if (orientation["gamma"] > 0.0) {
+    player_data[user_id][active_commands["upArrow"]] = true;
+  } else if (orientation["gamma"] < -40.0) {
+    player_data[user_id][active_commands["downArrow"]] = true;
+  } else {
+    player_data[user_id][active_commands["downArrow"]] = false;
   }
 }
+
+// {
+//   username: "Katie",
+//   id: "1234",
+//   success: true
+// }
+
+
+// nunchuck.onJoin(funci);
 
