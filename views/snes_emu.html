@@ -5,34 +5,28 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Snes9x + Nunchuck = &lt;3</title>
     <style>
-      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
-      textarea.emscripten { font-family: monospace; width: 80%; }
-      div.emscripten, h1 { text-align: center; }
-      div.emscripten_border { border: 1px solid black; }
       #fakerom { font-size: 20pt; margin: 5pt;}
       /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-      canvas.emscripten { border: 0px none; }
+      canvas { border: 0px none; }
     </style>
   </head>
   <body>
     <h1>Snes9x + Nunchuck = &lt;3</h1>
     <hr/>
-    <div class="emscripten" id="status">Downloading...</div>
-    <div class="emscripten_border" id="canvas_div" style="display: none">
-      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    <div id="status">Downloading...</div>
+    <div id="canvas_div" style="display: none">
+      <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
     </div>
-    <div class="emscripten emscripten_border" id="openrom">
+    <div id="openrom">
       <button id="fakerom" onclick="document.getElementById('rom').click()">Select a SNES ROM</button>
       <input style="display: none" type="file" id="rom" name="upload" onclick="document.getElementById('fakerom').click();" onchange="runEmulator(event.target.files);" multiple />
     </div>
     <hr/>
-    <div class="emscripten">
-      
+    <div>
       <input type="checkbox" id="resize"><label for="resize">Resize canvas</label>
       <input type="checkbox" id="pointerLock" checked><label for="pointerLock">Lock/hide mouse pointer</label>
       &nbsp;&nbsp;&nbsp;
-      <input type="button" value="Fullscreen" onclick="Module.requestFullScreen(document.getElementById('pointerLock').checked, 
-                                                                                document.getElementById('resize').checked)"><br>
+      <input type="button" value="Fullscreen" onclick="Module.requestFullScreen(document.getElementById('pointerLock').checked, document.getElementById('resize').checked)"><br>
       <input type="checkbox" id="vsync"><label for="vsync" id="vsync-label">Enable V-sync (can only be done before loading game)</label><br>
       <input type="text" id="latency" size="3" maxlength="3" value="96"> <label for="latency" id="latency-label">Audio latency (ms) (increase if you hear pops at fullspeed, can only be done before loading game)</label>
     </div>
