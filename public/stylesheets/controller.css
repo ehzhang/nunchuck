@@ -96,7 +96,14 @@ input:focus {
   background: #181818;
 }
 
+#controller .content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 #controller button {
+  font-family: 'Montserrat', 'Helvetica', 'Helvetica Neue', sans-serif;
   background: none;
   border: none;
   color: white;
@@ -105,4 +112,101 @@ input:focus {
 #controller button.close {
   bottom: 8px;
   right: 8px;
+}
+
+.d-pad {
+  position: absolute;
+  top: 48px;
+  right: 24px;
+
+  font-size: 1.4em;
+}
+
+.d-pad button {
+  background: #ac2226 !important;
+  height: 60px;
+  width: 60px;
+  border-radius: 100%;
+}
+
+.d-pad button.vertical {
+}
+
+.d-pad button.horizontal {
+  display: block;
+  margin: -.4em 2.6em;
+}
+
+#LEFT {
+
+}
+
+#RIGHT {
+  margin-top: -14px;
+}
+
+#DOWN {
+  margin-right: 1.5em;
+}
+
+#UP {
+
+}
+
+.commands {
+  position: absolute;
+  left: 16px;
+}
+
+.commands button {
+  background: #808080 !important;
+  margin-right: 8px;
+  border-radius: 40px;
+  padding: 12px;
+}
+
+.right.commands button {
+  display: block;
+  background: #264e73 !important;
+  border-radius: 0;
+  margin-top: 16px;
+  width: 70px;
+  height: 70px;
+  padding: 12px;
+}
+
+
+#START {
+}
+
+#SELECT {
+}
+
+#A {
+}
+
+#B {
+
+}
+
+.commands {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+
+  transform-origin: 0% 100%;
+  -ms-transform-origin:0% 100%;
+  -webkit-transform-origin:0% 100%;
+}
+
+.left.commands {
+  position: absolute;
+  top: 0;
+}
+
+.right.commands {
+  position: absolute;
+  bottom: 90px;
 }
