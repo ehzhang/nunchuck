@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>JSNES: A JavaScript NES emulator</title>
+    <script src="js/nunchuck.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <h1>JSNES</h1>
+    
+    <div id="emulator"></div>
+
+    <script src="js/plugins/jsnes/lib/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/plugins/jsnes/lib/dynamicaudio-min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/plugins/jsnes/jsnes.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+      var nes;
+      $(function() {
+          nes = new JSNES({
+              'ui': $('#emulator').JSNESUI({
+                  "Homebrew": [
+                      ['LJ65', 'assets/roms/lj65/lj65.nes'],
+                  ]
+              })
+          });
+      });
+      var socket = io();
+      var n = nunchuck.init('host', socket);
+
+      var player1 = null;
+      var player2 = null;
+
+      Array.prototype.diff = function(a) {
+        return this.filter(function(i) {return a.indexOf(i) < 0;});
+      };
+
+      n.onJoin(function(data){
+        if (!player1) {
+          player1 = {
+            username: data.username,
+            prevKeys: []
+          };
+        } else if (!player2) {
+          player2 = {
+            username: data.username,
+            prevKeys: []
+          };
+        } else {
+            // NES only supports max of two players!
+        }
+
+        var translateKeyPress = function(player, button){
+            switch (button) {
+                case "A":       return player == player1 ? 88 : 103;
+                case "B":       return player == player1 ? 90 : 105;
+                case "SELECT":  return player == player1 ? 17 : 99;
+                case "START":   return player == player1 ? 13 : 97;
+                case "UP":      return player == player1 ? 38 : 104;
+                case "DOWN":    return player == player1 ? 40 : 98;
+                case "LEFT":    return player == player1 ? 37 : 100;
+                case "RIGHT":   return player == player1 ? 39 : 1032;
+            }
+        };
+
+        var processInput = function(player, data) {
+            // things not previously pressed = new key down actions
+            var newKeyDowns = data.buttons.diff(player.prevKeys);
+            newKeyDowns.each(function(element, index, array){
+              var ev = {};
+              ev.keyCode = translateKeyPress(player, element);
+              ev.preventDefault = $.noop();
+              nes.keyboard.keyDown(ev);
+            });
+
+            // things previously pressed that are no longer pressed = new key up actions
+            var newKeyUps = player.prevKeys.diff(data.buttons);
+            newKeyUps.each(function(element, index, array){
+              var ev = {};
+              ev.keyCode = translateKeyPress(player, element);
+              ev.preventDefault = $.noop();
+              nes.keyboard.keyUp(ev);
+            });
+
+            player.prevKeys = data.buttons;
+        }
+
+        n.receive(function(data){
+          if (data.username === player1.username) {
+            processInput(player1, data);
+          } else if (data.username === player2.username) {
+            processInput(player2, data);
+          } else {
+            // if you're not player 1 or player 2, ignore your input!
+          }
+        })
+
+        // TODO: disconnect resets player1/player2 to null? pause the game?
+      })
+    </script>
+    <!--[if IE]>
+        <script type="text/vbscript" src="source/jsnes-ie-hacks.vbscript"></script>
+    <![endif]-->
+
+</body>
+</html>
