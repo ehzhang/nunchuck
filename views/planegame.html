@@ -7,9 +7,9 @@
     <script src="js/nunchuck.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>player_data = {}; down_keys = {};</script>
-
+    <script>player_data = {}; </script>
 
     <script>
       var socket = io();
@@ -25,7 +25,8 @@
         if (!players[data.username]){
           players[data.username] = numPlayers;
           numPlayers+=1;
-          createPlane(players[data.username])
+          createPlane(players[data.username]);
+          $('.users').append("<br><strong>" + data.username + "</strong>")
         }
 
         n.receive(function(data){
@@ -34,12 +35,40 @@
             movePlane(data)
           }
         })
-      })
+      });
+
+      $(document).ready(function(){
+        $('.code').text(n.roomId)
+      });
 
     </script>
+
+    <style>
+
+      .code {
+        position: fixed;
+        font-size: 15em;
+        opacity: .5;
+        right: .2em;
+        bottom: 0;
+      }
+
+      .users {
+        position: fixed;
+        font-family: 'Montserrat', 'Helvetic Neue', 'Helvetica', sans-serif;
+        font-size: 1.2em;
+        top: 8px;
+        left: 8px;
+      }
+    </style>
   </head>
 
   <body>
+
+    <div class="code"></div>
+
+    <div class="users">USERS ONLINE:</div>
+
 
     <script src="plugins/cutjs/cut-core.js"></script>
     <script src="plugins/cutjs/cut-mouse.js"></script>

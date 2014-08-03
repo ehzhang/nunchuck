@@ -26,42 +26,50 @@
 // movePlane({username: "katie", id: "1234", buttons: ["leftArrow"], orientation: {alpha: 0.0, beta: 0.0, gamma: 0.0}, timestamp: "1238794"});
 
 movePlane = function(obj) {
-  var possible_commands = ["leftArrow", "rightArrow", "upArrow", "downArrow", "A", "B", "LT", "RT", "start"];
+  var possible_commands = ["LEFT", "RIGHT", "UP", "DOWN", "A", "B", "START"];
   var pressed_buttons = obj.buttons;
   var orientation = obj.orientation;
   var user_id = obj.id;
 
   // change this
-  var active_commands = {"leftArrow":37, "rightArrow":39, "upArrow":38, "downArrow":40};
+  var active_commands = {"LEFT":37, "RIGHT":39, "UP":38, "DOWN":40};
 
-
-//  console.log(pressed_buttons);
-//  console.log("in move plane: " + down_keys);
 
   for (var i=0; i<possible_commands.length; i++) {
     command = possible_commands[i];
     if (pressed_buttons.indexOf(command) > -1) {
       player_data[user_id][active_commands[command]] = true;
-//      console.log(down_keys);
     } else if (active_commands[command]) {
       player_data[user_id][active_commands[command]] = false;
     }
   }
 
+  if (obj.buttons.indexOf('A') > -1){
+    if (drones[user_id]){
+      drones[user_id].shoot();
+    }
+  }
+
+  if (obj.buttons.indexOf('START') > -1){
+    if (!drones[user_id]){
+      createPlane(user_id);
+    }
+  }
+
   if (orientation["beta"] > 20.0) {
-    player_data[user_id][active_commands["rightArrow"]] = true;
+    player_data[user_id][active_commands["RIGHT"]] = true;
   } else if (orientation["beta"] < -20.0) {
-    player_data[user_id][active_commands["leftArrow"]] = true;
+    player_data[user_id][active_commands["LEFT"]] = true;
   } else {
-    player_data[user_id][active_commands["leftArrow"]] = false;
+    player_data[user_id][active_commands["LEFT"]] = false;
   }
 
   if (orientation["gamma"] > 0.0) {
-    player_data[user_id][active_commands["upArrow"]] = true;
+    player_data[user_id][active_commands["UP"]] = true;
   } else if (orientation["gamma"] < -40.0) {
-    player_data[user_id][active_commands["downArrow"]] = true;
+    player_data[user_id][active_commands["DOWN"]] = true;
   } else {
-    player_data[user_id][active_commands["downArrow"]] = false;
+    player_data[user_id][active_commands["DOWN"]] = false;
   }
 }
 
@@ -72,5 +80,4 @@ movePlane = function(obj) {
 // }
 
 
-// nunchuck.onJoin(funci);
 

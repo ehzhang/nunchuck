@@ -210,3 +210,7 @@ input:focus {
   position: absolute;
   bottom: 90px;
 }
+
+#controller button {
+  -webkit-touch-callout:none;
+}
