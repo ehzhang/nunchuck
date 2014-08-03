@@ -68,14 +68,60 @@ World.prototype.calculateElapsed = function() {
 function Splat(xloc, yloc) {
   this.x = xloc;
   this.y = yloc;
-}
+};
 
 Splat.prototype.uiCreate = function(world) {
   this.world = world;
-  this.ui = (this.ui || Cut.image("base:drone1").pin("handle", 0.5))
+  this.ui = (this.ui || Cut.image("splat:splat1").pin("handle", 0.5))
     .appendTo(world.ui);
-  this.uiUpdate();
+  console.log(this.ui);
 };
+
+Splat.prototype.animate = function(t) {
+
+};
+
+// function Bullet(xloc, yloc, xvel, yvel, parent_id) {
+//   this.x = xloc;
+//   this.y = yloc;
+//   this.vx = xvel;
+//   this.vy = yvel;
+//   this.parentid = parent_id;
+// }
+
+// Bullet.prototype.uiCreate = function(world) {
+//   this.world = world;
+//   this.ui = (this.ui || Cut.image("base:bullet").pin("handle", 0.5))
+//     .appendTo(world.ui);
+//   console.log(this.ui);
+// }
+
+// Bullet.prototype.animate = function(t) {
+//   this.x = this.x + this.vx;
+//   this.y = this.y + this.vy;
+//   this.uiUpdate();
+// }
+
+// Bullet.prototype.uiUpdate = function() {
+//   if (!this.ui)
+//     return;
+//   var x = this.x;
+//   var y = this.y;
+
+//   var pin = {
+//     rotation : 0,
+//     scaleY : 1 / Math.PI * 400
+//   };
+
+//   this.ui.xy(x, y).pin(pin);
+// };
+
+// Bullet.prototype.uiRemove = function() {
+//   if (this.ui) {
+//     this.ui.remove();
+//     this.ui = null;
+//   }
+// };
 
 function Drone(vMin, vMax, aMax) {
   this.x = 0;
@@ -172,17 +218,37 @@ Drone.prototype.animate = function(t) {
   player_data[this.playerId]["locationY"] = this.y;
   this.uiUpdate();
 
-  var keys = Object.keys(player_data);
-  for(var i=0; i<keys.length(); i++) {
+  var keys = Object.keys(drones);
+  for(var i=0; i<keys.length; i++) {
     if (keys[i] != this.playerId) {
       var other_x = player_data[keys[i]]["locationX"];
       var other_y = player_data[keys[i]]["locationY"];
-      if (Math.abs(this.x-other_x) < 50 || Math.abs(this.y-other_y) < 50) {
-        drones[this.playerId].destruct();
-        drones[keys[i]].destruct();
+
+      if (Math.abs(this.x-other_x) < 50 && Math.abs(this.y-other_y) < 50) {
+        console.log("dead: ", other_x, this.x);
+        console.log("deady: ", other_y, this.y);
+        var dead1 = drones[this.playerId];
+        var dead2 = drones[keys[i]];
+        delete drones[this.playerId];
+        delete drones[keys[i]];
+        dead1.destruct();
+        dead2.destruct();
+
       }
     }
   }
+  // var bulletKeys = Object.keys(bullets);
+  // for(var j=0; j<bulletKeys.length; j++) {
+  //   var other_x = bullets[bulletKeys[j]].x;
+  //   var other_y = bullets[bulletKeys[j]].y;
+  //   if (this.playerId != bullets[bulletKeys[j]].parentid && Math.abs(this.x-other_x) < 40 && Math.abs(this.y-other_y) < 40) {
+  //     delete bulletKeys[j];
+  //     dead = drones[this.playerId];
+  //     delete drones[this.playerId];
+  //     dead.destruct();
+
+  //   }
+  // }
 };
 
 Cut(function(root, canvas) {
@@ -244,8 +310,21 @@ Cut(function(root, canvas) {
   };
 
   var destructSelf = function() {
+    // console.log("asdfasdf", this.x, this.y);
+    var x_ind = this.x;
+    var y_ind = this.y;
     world.removeObject(this);
+    world.addObject(new Splat(x_ind, y_ind));
   }
+
+  // var createBullet = function() {
+  //   var x_ind = this.x;
+  //   var y_ind = this.y;
+  //   var x_vel = this.vx*1.5;
+  //   var y_vel = this.vy*1.5;
+  //   var bullet_new = world.addObject(new Bullet(x_ind, y_ind, x_vel, y_vel));
+  //   bullets[parseInt(Math.random()*1000000)] = bullet_new;
+  // }
 
   createPlane = function(playerId) {
     var drone_new = world.addObject(new Drone(speed, speed * (Math.random()*5+1), acc));
@@ -255,6 +334,7 @@ Cut(function(root, canvas) {
     drone_new.accAbsolute = accelerateAbsolute;
     drone_new.accOrbit = accelerateOrbit;
     drone_new.destruct = destructSelf;
+    // drone_new.fire = createBullet;
     drones[drone_new.playerId] = drone_new;
     return drone_new;    
   };
@@ -356,18 +436,20 @@ Cut(function(root, canvas) {
 
 Drone.prototype.uiCreate = function(world) {
   this.world = world;
-  var drone_number = Math.random()*4;
-  if (Object.keys(player_data).length%4==0) {
+  if (Object.keys(player_data).length%5==0) {
     this.ui = (this.ui || Cut.image("base:drone1").pin("handle", 0.5))
       .appendTo(world.ui);
-  } else if (Object.keys(player_data).length%4==1) {
+  } else if (Object.keys(player_data).length%5==1) {
     this.ui = (this.ui || Cut.image("base:drone2").pin("handle", 0.5))
       .appendTo(world.ui);
-  } else if (Object.keys(player_data).length%4==2) {
+  } else if (Object.keys(player_data).length%5==2) {
     this.ui = (this.ui || Cut.image("base:drone3").pin("handle", 0.5))
       .appendTo(world.ui);
-  } else {
+  } else if (Object.keys(player_data).length%5==3) {
     this.ui = (this.ui || Cut.image("base:drone4").pin("handle", 0.5))
+      .appendTo(world.ui);
+  } else {
+    this.ui = (this.ui || Cut.image("base:drone5").pin("handle", 0.5))
       .appendTo(world.ui);
   }
   
