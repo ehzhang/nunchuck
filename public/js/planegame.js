@@ -318,13 +318,13 @@ Cut(function(root, canvas) {
 Drone.prototype.uiCreate = function(world) {
   this.world = world;
   var drone_number = Math.random()*4;
-  if (drone_number < 1) {
+  if (Object.keys(player_data).length%4==0) {
     this.ui = (this.ui || Cut.image("base:drone").pin("handle", 0.5))
       .appendTo(world.ui);
-  } else if (drone_number < 2) {
+  } else if (Object.keys(player_data).length%4==1) {
     this.ui = (this.ui || Cut.image("base:drone2").pin("handle", 0.5))
       .appendTo(world.ui);
-  } else if (drone_number < 3) {
+  } else if (Object.keys(player_data).length%4==2) {
     this.ui = (this.ui || Cut.image("base:drone3").pin("handle", 0.5))
       .appendTo(world.ui);
   } else {

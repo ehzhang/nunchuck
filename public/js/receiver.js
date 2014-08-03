@@ -72,5 +72,4 @@ movePlane = function(obj) {
 // }
 
 
-// nunchuck.onJoin(funci);
 
