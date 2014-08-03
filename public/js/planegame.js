@@ -307,9 +307,6 @@ Drone.prototype.uiCreate = function(world) {
   this.world = world;
   this.ui = (this.ui || Cut.image("base:drone").pin("handle", 0.5))
       .appendTo(world.ui);
-  this.ui2 = (this.ui2 || Cut.image("base:drone").pin("handle", 0.5).pin({
-    alpha : 0.2
-  })).appendTo(world.ui);
   this.uiUpdate();
 };
 
@@ -325,18 +322,12 @@ Drone.prototype.uiUpdate = function() {
   };
 
   this.ui.xy(x, y).pin(pin);
-  this.ui2.xy(x + 30, y + 30).pin(pin);
 };
 
 Drone.prototype.uiRemove = function() {
   if (this.ui) {
     this.ui.remove();
     this.ui = null;
-  }
-
-  if (this.ui2) {
-    this.ui2.remove();
-    this.ui2 = null;
   }
 };
 
