@@ -2,15 +2,27 @@
 <html>
 <head lang="en">
   <meta charset="UTF-8">
-  <title> Nunchuck </title>
+  <title> Nunchuck.js </title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+  <link href='stylesheets/normalize.css' rel="stylesheet" type="text/css">
+  <link href='stylesheets/animate.css' rel="stylesheet" type="text/css">
   <link href='stylesheets/style.css' rel="stylesheet" type="text/css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    $(document).ready(function(){
+      $('div').addClass('animated fadeIn');
+      $('img').addClass('animated fadeInUpBig');
+    })
+  </script>
 </head>
 <body>
 
-  <a href="test">TEST</a>
+<section id="splash">
+  <div class="title">nunchuck<span class="accent">.</span>js</div>
+  <div class="subtitle">easy multi-device data synchronization through the browser.</div>
+  <img src="assets/images/connect.png">
+</section>
 
 </body>
 </html>

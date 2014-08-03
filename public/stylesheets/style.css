@@ -1,7 +1,22 @@
+html,
 body {
-  padding: 50px;
   font: 1em "Montserrat", Helvetica, Arial, sans-serif;
   text-align: center;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+section {
+  position: relative;
+}
+
+section#splash {
+  min-height: 100%;
+  background: #1f1f1f;
+  padding-top: 80px;
+  color: white;
 }
 
 .title {
@@ -13,6 +28,10 @@ body {
   font: 2em "Montserrat", Helvetica, Arial, sans-serif;
   color: #737373;
   margin-bottom: 30px;
+}
+
+.accent {
+  color: #458CCE;
 }
 
 a {
@@ -45,6 +64,8 @@ a.button:hover {
   color: white;
   background: #33b5e5;
 }
+
+
 
 @media only screen and (max-width: 480px) {
   .title {
