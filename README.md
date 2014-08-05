@@ -16,7 +16,7 @@ Demo
 
 #### Plane Game
 
-You can play our multiplayer fighter plane demo by navigating to [http://nunchuckjs](http://nunchuckjs).com/planegame in any desktop browser.
+You can play our multiplayer fighter plane demo by navigating to [http://nunchuckjs.com](http://nunchuckjs.com/planegame) in any desktop browser.
 
 Use your phone as a controller by navigating to [http://nunchuckjs.com](http://nunchuckjs.com) on a mobile browser, then selecting "CONNECT." Then, choose a username and enter the room ID on the screen of the desktop browser. You will see a plane spawn in the screen that responds to your phone's movements.
 
