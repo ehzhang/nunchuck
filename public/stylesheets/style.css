@@ -30,13 +30,19 @@ section#splash {
   margin-bottom: 30px;
 }
 
+.contact {
+  font: 1.35em "Montserrat", Helvetica, Arial, sans-serif;
+  margin-bottom: 30px;
+  color: #737373;
+}
+
 .accent {
   color: #458CCE;
 }
 
 a {
   font-size: 1.2em;
-  color: #33b5e5;
+  color: #458CCE;
 }
 
 .downloads {
