@@ -370,34 +370,9 @@ Cut(function(root, canvas) {
 //    player_data[drone.playerId][e.keyCode] = false;
   };
 
-  // Mouse
-  world.ui.listen(Cut.Mouse.START, function(ev, point) {
-    world.run(true);
-    root.touch();
-    if (b !== null && g !== null) {
-      a0 = a;
-      b0 = b;
-      g0 = g;
-    } else {
-      _down_mouse.x = point.x;
-      _down_mouse.y = point.y;
-      _down_mouse.valid = true;
-    }
-    return true;
-
-  }).listen(Cut.Mouse.END, function(ev, point) {
-    a0 = b0 = g0 = null;
-    _down_mouse.valid = false;
-    return true;
-
-  }).listen(Cut.Mouse.MOVE, function(ev, point) {
-    if (_down_mouse.valid) {
-      _down_mouse.x = point.x;
-      _down_mouse.y = point.y;
-    }
-    return true;
-
-  });
+  // Start the game
+  world.run(true);
+  root.touch();
 
   // Tilting
 
