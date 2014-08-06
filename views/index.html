@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>
     $(document).ready(function(){
-      $('div').addClass('animated fadeIn');
+      $('div,button').addClass('animated fadeIn');
       $('#mainphone').addClass('animated fadeInUp');
       $('#snes').addClass('animated fadeInRight');
       $('#planegame').addClass('animated fadeInLeft');
@@ -34,19 +34,20 @@
 <section id="splash">
   <div class="title">nunchuck<span class="accent">.</span>js</div>
   <div class="subtitle">easy multi-device data synchronization through the browser.</div>
-  <div class="subtitle">Check us out on <a href="http://github.com/ehzhang/nunchuck">Github</a>!</div>
+  <button onclick="location.href='http://github.com/ehzhang/nunchuck'">DOCUMENTATION ON GITHUB</button>
+
   <div class="previews">
     <div id="planegame">
-      <a href="planegame"><i class="fa fa-paper-plane fa-5x"></i></a><br><br>
+      <a href="planegame"><i class="fa fa-paper-plane fa-3x"></i></a><br><br>
       Play the Plane Game!
     </div>
-    <img id="mainphone" src="assets/images/connect.png">
     <div id="snes">
-      <a href="snes"><i class="fa fa-gamepad fa-5x"></i></a><br><br>
+      <a href="snes"><i class="fa fa-gamepad fa-3x"></i></a><br><br>
       Play our SNES emulator!
     </div>
   </div>
   <div class="contact"> Questions? Contact us at <a href="mailto:team@nunchuckjs.com">team@nunchuckjs.com</a></div>
+  <img id="mainphone" src="assets/images/connect.png">
 </section>
 
 </body>
